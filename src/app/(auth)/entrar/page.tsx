@@ -14,6 +14,11 @@ export default async function EntrarPage({ searchParams }: PageProps<"/entrar">)
         <h1 className="text-3xl font-semibold">Bem-vindo(a) de volta</h1>
         <p className="text-muted-foreground">Entre para continuar a sua jornada musical.</p>
       </div>
+      {sp.aviso === "email-confirmado" && (
+        <Alert>
+          <AlertDescription>E-mail confirmado! Entre com seu e-mail e senha para continuar.</AlertDescription>
+        </Alert>
+      )}
       {sp.erro === "link-invalido" && (
         <Alert variant="destructive">
           <AlertDescription>O link expirou ou já foi usado. Entre com sua senha ou peça um novo link.</AlertDescription>
