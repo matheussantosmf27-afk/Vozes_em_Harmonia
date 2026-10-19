@@ -66,7 +66,7 @@ $$;
 -- Níveis: 1 ainda não iniciado · 2 em familiarização · 3 em desenvolvimento ·
 --         4 executado com consistência · 5 aplicado em repertório (só professor)
 -- Regras (espelhadas em src/lib/pedagogy/mastery.ts):
---   2: ao menos 1 tentativa (inclui autoavaliações guiadas)
+--   2: ao menos 1 tentativa (inclui autoavaliações, que não contam acima disso)
 --   3: >= 3 tentativas avaliadas e média das últimas 5 >= 60%
 --   4: >= 5 tentativas avaliadas, média das últimas 5 >= 80% e em >= 3 dias
 --      diferentes; limitado por skills.auto_max_level
@@ -110,7 +110,8 @@ begin
   select count(*) into graded_count
     from public.exercise_attempts a
     join public.exercises e on e.id = a.exercise_id
-   where a.user_id = p_user and e.skill_slug = p_skill and e.type <> 'self_check';
+   where a.user_id = p_user and e.skill_slug = p_skill and e.type <> 'self_check'
+     and not coalesce((a.details ->> 'selfReported')::boolean, false);
 
   select avg(r.score), count(distinct r.d)
     into recent_avg, recent_days
@@ -119,6 +120,7 @@ begin
         from public.exercise_attempts a
         join public.exercises e on e.id = a.exercise_id
        where a.user_id = p_user and e.skill_slug = p_skill and e.type <> 'self_check'
+         and not coalesce((a.details ->> 'selfReported')::boolean, false)
        order by a.created_at desc
        limit 5
     ) r;
