@@ -78,7 +78,7 @@ export default async function DiretorPage({ searchParams }: PageProps<"/diretor"
   ]);
 
   const inGroup = grupo ? new Set((groupMembers ?? []).filter((g) => g.group_id === grupo).map((g) => g.user_id)) : null;
-  const members = overview.filter((m) => (!inGroup || inGroup.has(m.id)) && (!naipe || (naipe === "sem" ? !m.classification : m.classification === naipe)));
+  const members = overview.filter((m) => (!inGroup || inGroup.has(m.id)) && (!naipe || (naipe === "sem" ? !m.classification || m.classification === "nao_classificada" : m.classification === naipe)));
   const ids = new Set(members.map((m) => m.id));
   const n = members.length;
 
