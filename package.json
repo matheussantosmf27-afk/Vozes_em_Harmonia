@@ -6,7 +6,13 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "eslint"
+    "lint": "eslint",
+    "typecheck": "tsc --noEmit",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "test:db": "bash scripts/test-db.sh",
+    "content:sql": "tsx scripts/generate-content-sql.ts",
+    "db:types": "bash scripts/generate-db-types.sh"
   },
   "dependencies": {
     "@base-ui/react": "^1.9.0",
@@ -39,6 +45,7 @@
     "eslint-config-next": "16.4.2",
     "jsdom": "^29.1.1",
     "tailwindcss": "^4",
+    "tsx": "^4.23.15",
     "typescript": "^5",
     "vitest": "^5.0.5"
   }
