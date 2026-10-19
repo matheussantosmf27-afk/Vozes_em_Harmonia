@@ -14,8 +14,13 @@ export async function GET(request: NextRequest) {
   const type = searchParams.get("type") as EmailOtpType | null;
 
   let ok = false;
+  let otherBrowser = false;
   if (code) {
-    ok = !(await supabase.auth.exchangeCodeForSession(code)).error;
+    const { error } = await supabase.auth.exchangeCodeForSession(code);
+    ok = !error;
+    // Link aberto em outro navegador (ex.: app de e-mail no celular): o Supabase já
+    // validou o link, mas a sessão só pode ser criada no navegador que o pediu.
+    otherBrowser = error?.code === "pkce_code_verifier_not_found";
   } else if (tokenHash && type) {
     ok = !(await supabase.auth.verifyOtp({ type, token_hash: tokenHash })).error;
   }
@@ -26,7 +31,13 @@ export async function GET(request: NextRequest) {
     url.pathname = next;
     return NextResponse.redirect(url);
   }
+  const isRecovery = next.startsWith("/auth/nova-senha");
+  if (otherBrowser && isRecovery) {
+    url.pathname = "/recuperar-senha";
+    url.searchParams.set("erro", "outro-navegador");
+    return NextResponse.redirect(url);
+  }
   url.pathname = "/entrar";
-  url.searchParams.set("erro", "link-invalido");
+  url.searchParams.set(otherBrowser ? "aviso" : "erro", otherBrowser ? "email-confirmado" : "link-invalido");
   return NextResponse.redirect(url);
 }

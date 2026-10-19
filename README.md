@@ -91,6 +91,10 @@ Sem as variáveis do Supabase, o app abre uma página de configuração (`/confi
    - *Site URL*: o endereço público (ex.: `https://vozes.suaigreja.org`);
    - *Redirect URLs*: `https://SEU-DOMINIO/auth/confirm` (e o endereço local, se for testar).
 4. Em **Authentication → Providers → Email**, mantenha a confirmação de e-mail ativa. Para e-mails em produção, configure um SMTP próprio (o envio padrão do Supabase tem limite baixo).
+   - Recomendado: em **Authentication → Emails → Templates**, troque o link dos modelos para o formato `token_hash`, que funciona mesmo quando a pessoa abre o e-mail em outro navegador (ex.: app de e-mail no celular):
+     - *Confirm signup*: `{{ .SiteURL }}/auth/confirm?token_hash={{ .TokenHash }}&type=email&next=/inicio`
+     - *Reset password*: `{{ .SiteURL }}/auth/confirm?token_hash={{ .TokenHash }}&type=recovery&next=/auth/nova-senha`
+   - Com o link padrão, a confirmação aberta em outro navegador ainda vale, mas a pessoa precisa entrar com a senha (o app avisa); a recuperação de senha precisa ser aberta no mesmo navegador.
 5. Os buckets `media` e `recordings` são criados pela migration de Storage, privados, com políticas próprias.
 6. Copie a *Project URL* e a *Publishable key* (ou *anon key*) para as variáveis de ambiente.
 
