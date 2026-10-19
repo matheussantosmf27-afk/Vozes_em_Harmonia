@@ -28,7 +28,7 @@ export function usePitchDetector() {
   const bufRef = useRef<Float32Array<ArrayBuffer> | null>(null);
   const lastRef = useRef(0);
 
-  const loop = useCallback(() => {
+  const frame = useCallback(() => {
     const analyser = analyserRef.current;
     if (!analyser) return;
     const now = performance.now();
@@ -44,8 +44,16 @@ export function usePitchDetector() {
       const rec = recordingRef.current;
       if (rec) rec.frames.push({ time: now - rec.start, midi: tracked.midi, confidence: tracked.confidence });
     }
-    rafRef.current = requestAnimationFrame(loop);
   }, []);
+
+  const startLoop = useCallback(() => {
+    const tick = () => {
+      if (!analyserRef.current) return;
+      frame();
+      rafRef.current = requestAnimationFrame(tick);
+    };
+    rafRef.current = requestAnimationFrame(tick);
+  }, [frame]);
 
   const start = useCallback(async () => {
     if (!isMicSupported()) {
@@ -77,14 +85,14 @@ export function usePitchDetector() {
       analyserRef.current = analyser;
       trackerRef.current.reset();
       setStatus("listening");
-      rafRef.current = requestAnimationFrame(loop);
+      startLoop();
       return true;
     } catch (err) {
       const name = (err as DOMException)?.name;
       setStatus(name === "NotAllowedError" || name === "SecurityError" ? "denied" : "error");
       return false;
     }
-  }, [loop]);
+  }, [startLoop]);
 
   const stop = useCallback(() => {
     if (rafRef.current !== null) cancelAnimationFrame(rafRef.current);

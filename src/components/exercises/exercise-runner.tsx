@@ -62,7 +62,6 @@ export function ExerciseRunner({ exercise, level = 1, voiceRange, concept, reval
   const effectiveLevel = simplified ? Math.max(1, level - 1) : level;
   const { config, levels } = useMemo(() => resolveLevelConfig(exercise.config, effectiveLevel), [exercise.config, effectiveLevel]);
   const total = useMemo(() => roundCount(exercise.type, resolveLevelConfig(exercise.config, level).config), [exercise.config, exercise.type, level]);
-  // eslint-disable-next-line react-hooks/exhaustive-deps
   const rng = useMemo(() => createRng(Date.now() + runId), [runId]);
   const round: Round | null = useMemo(
     () => (started && index < total ? generateRound(exercise.type, config, { rng, index, voiceRange: voiceRange ?? undefined }) : null),

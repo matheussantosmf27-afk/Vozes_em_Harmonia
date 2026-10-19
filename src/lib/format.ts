@@ -1,5 +1,10 @@
 const TZ = "America/Sao_Paulo";
 
+/** Momento atual (ms). Isolado para deixar explícito que a página depende do relógio. */
+export function nowMs() {
+  return Date.now();
+}
+
 export function formatDate(value: string | Date, opts: Intl.DateTimeFormatOptions = { day: "2-digit", month: "short", year: "numeric" }) {
   return new Intl.DateTimeFormat("pt-BR", { timeZone: TZ, ...opts }).format(typeof value === "string" ? new Date(value) : value);
 }

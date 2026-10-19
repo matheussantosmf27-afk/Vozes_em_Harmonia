@@ -111,6 +111,8 @@ export function AssessmentWizard({ kind, exercises }: { kind: "inicial" | "perio
   useEffect(() => {
     try {
       const saved = JSON.parse(localStorage.getItem(STORAGE) ?? "null");
+      // Restaura o rascunho salvo neste aparelho (só existe no cliente).
+      // eslint-disable-next-line react-hooks/set-state-in-effect
       if (saved?.q) setQ({ ...DEFAULT_Q, ...saved.q });
       if (saved?.results) setResults(saved.results);
       if (saved?.range) setRange(saved.range);

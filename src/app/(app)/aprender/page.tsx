@@ -6,6 +6,7 @@ import { Meter } from "@/components/common/page-header";
 import { buttonVariants } from "@/components/ui/button";
 import { requireUser } from "@/lib/auth";
 import { getLessonsIndex, getMyProgress, getPaths } from "@/lib/data/content";
+import { createClient } from "@/lib/supabase/server";
 
 export const metadata: Metadata = { title: "Aprender" };
 
@@ -20,7 +21,13 @@ const ICONS: Record<string, React.ComponentType<{ className?: string }>> = {
 
 export default async function AprenderPage() {
   const user = await requireUser();
-  const [paths, lessons, progress] = await Promise.all([getPaths(), getLessonsIndex(), getMyProgress(user.id)]);
+  const supabase = await createClient();
+  const [paths, lessons, progress, { data: extras }] = await Promise.all([
+    getPaths(),
+    getLessonsIndex(),
+    getMyProgress(user.id),
+    supabase.from("exercises").select("slug, title, instructions").not("created_by", "is", null).is("lesson_id", null).eq("is_published", true).order("created_at", { ascending: false }),
+  ]);
   return (
     <>
       <PageHeader
@@ -56,6 +63,19 @@ export default async function AprenderPage() {
           );
         })}
       </div>
+      {extras && extras.length > 0 && (
+        <section className="mt-10 space-y-3">
+          <h2 className="text-xl font-semibold">Atividades extras dos professores</h2>
+          <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
+            {extras.map((e) => (
+              <Link key={e.slug} href={`/aprender/atividade/${e.slug}`} className="rounded-2xl border bg-card p-4 hover:border-primary">
+                <p className="font-medium">{e.title}</p>
+                {e.instructions && <p className="text-sm text-muted-foreground">{e.instructions}</p>}
+              </Link>
+            ))}
+          </div>
+        </section>
+      )}
     </>
   );
 }

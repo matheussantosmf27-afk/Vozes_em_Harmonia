@@ -36,23 +36,34 @@ export function WarmupRoutine({ low = false }: { low?: boolean }) {
   const transposeRef = useRef(0);
   const step = STEPS[stepIdx];
 
+  const stepRef = useRef(stepIdx);
   useEffect(() => {
-    if (!running) return;
-    const t = window.setInterval(() => setRemaining((r) => r - 1), 1000);
-    return () => window.clearInterval(t);
-  }, [running]);
+    stepRef.current = stepIdx;
+  }, [stepIdx]);
 
-  useEffect(() => {
-    if (remaining > 0 || !running) return;
+  function goTo(next: number) {
     playback.current?.stop();
-    if (stepIdx + 1 < STEPS.length) {
-      setStepIdx(stepIdx + 1);
-      setRemaining(STEPS[stepIdx + 1].seconds);
+    if (next < STEPS.length) {
+      setStepIdx(next);
+      setRemaining(STEPS[next].seconds);
     } else {
       setRunning(false);
       setDone(true);
     }
-  }, [remaining, running, stepIdx]);
+  }
+
+  useEffect(() => {
+    if (!running) return;
+    const t = window.setInterval(() => {
+      setRemaining((r) => {
+        if (r > 1) return r - 1;
+        // fim da etapa: avança fora do cálculo do estado
+        window.setTimeout(() => goTo(stepRef.current + 1), 0);
+        return 0;
+      });
+    }, 1000);
+    return () => window.clearInterval(t);
+  }, [running]);
 
   // Repete o padrão de notas subindo meio-tom a cada vez.
   useEffect(() => {
@@ -120,16 +131,7 @@ export function WarmupRoutine({ low = false }: { low?: boolean }) {
             </Button>
             <Button
               variant="outline"
-              onClick={() => {
-                playback.current?.stop();
-                if (stepIdx + 1 < STEPS.length) {
-                  setStepIdx(stepIdx + 1);
-                  setRemaining(STEPS[stepIdx + 1].seconds);
-                } else {
-                  setRunning(false);
-                  setDone(true);
-                }
-              }}
+              onClick={() => goTo(stepIdx + 1)}
             >
               <SkipForward /> Próxima etapa
             </Button>
