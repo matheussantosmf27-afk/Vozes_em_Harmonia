@@ -20,7 +20,7 @@ function memberPath(id: string) {
 }
 
 const classificationSchema = z.object({
-  userId: z.uuid(),
+  userId: z.guid(),
   classification: z.enum(VOICES),
   status: z.enum(["provisoria", "em_desenvolvimento", "confirmada"]),
   comfortableLow: midiOpt,
@@ -67,7 +67,7 @@ export async function setClassification(_prev: ActionResult, formData: FormData)
 }
 
 const assessmentSchema = z.object({
-  userId: z.uuid(),
+  userId: z.guid(),
   notes: z.string().trim().min(1, "Descreva a avaliação.").max(4000),
   comfortableLow: midiOpt,
   comfortableHigh: midiOpt,
@@ -135,7 +135,7 @@ export async function setSkillOverride(userId: string, skill: string, level: num
 }
 
 const observationSchema = z.object({
-  userId: z.uuid(),
+  userId: z.guid(),
   category: z.enum(["geral", "afinacao", "respiracao", "ritmo", "projecao", "percepcao", "independencia_vocal", "interpretacao", "saude_vocal", "distribuicao_vocal"]),
   content: z.string().trim().min(1, "Escreva a observação.").max(4000),
   visible: z.boolean(),
@@ -167,8 +167,8 @@ export async function deleteObservation(id: string, userId: string): Promise<Act
 }
 
 const planSchema = z.object({
-  userId: z.uuid(),
-  planId: z.uuid().optional().or(z.literal("")),
+  userId: z.guid(),
+  planId: z.guid().optional().or(z.literal("")),
   objective: z.string().trim().min(1).max(600),
   weeklyFrequency: z.coerce.number().int().min(1).max(7),
   minutesPerSession: z.coerce.number().int().min(5).max(120),
@@ -217,7 +217,7 @@ const activitySchema = z.object({
   instructions: z.string().trim().max(1000).default(""),
   type: z.enum(EXERCISE_TYPES),
   skill: z.string().regex(/^[a-z0-9-]+$/),
-  lessonId: z.uuid().nullable(),
+  lessonId: z.guid().nullable(),
   purpose: z.enum(["pratica", "avaliacao"]),
   difficulty: z.number().int().min(1).max(5),
   config: z.record(z.string(), z.unknown()),

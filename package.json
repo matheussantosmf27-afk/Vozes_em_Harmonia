@@ -12,7 +12,8 @@
     "test:watch": "vitest",
     "test:db": "bash scripts/test-db.sh",
     "content:sql": "tsx scripts/generate-content-sql.ts",
-    "db:types": "bash scripts/generate-db-types.sh"
+    "db:types": "bash scripts/generate-db-types.sh",
+    "test:e2e": "playwright test"
   },
   "dependencies": {
     "@base-ui/react": "^1.9.0",

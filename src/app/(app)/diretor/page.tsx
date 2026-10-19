@@ -121,11 +121,17 @@ export default async function DiretorPage({ searchParams }: PageProps<"/diretor"
     .slice(0, 5);
 
   const reinforcement = (repertoire ?? []).flatMap((r) =>
-    r.arrangements.flatMap((a) =>
-      a.vocal_parts
-        .filter((p) => p.arrangement_assignments.length === 0 || !p.arrangement_assignments.some((x) => x.status === "pronto"))
-        .map((p) => ({ song: r.title, songId: r.id, part: p.name, arrangement: a.title, assigned: p.arrangement_assignments.length, ready: p.arrangement_assignments.filter((x) => x.status === "pronto").length })),
-    ),
+    r.arrangements
+      .map((a) => {
+        const weak = a.vocal_parts.filter((p) => !p.arrangement_assignments.some((x) => x.status === "pronto"));
+        return {
+          song: r.title,
+          songId: r.id,
+          arrangement: a.title,
+          parts: weak.map((p) => `${p.name}${p.arrangement_assignments.length === 0 ? " (ninguém designado)" : ` (${p.arrangement_assignments.length} estudando)`}`),
+        };
+      })
+      .filter((x) => x.parts.length > 0),
   );
   const attention = members.filter((m) => m.flags.length > 0).slice(0, 10);
 
@@ -225,12 +231,13 @@ export default async function DiretorPage({ searchParams }: PageProps<"/diretor"
         <Panel title="Naipes que precisam de reforço" action={<Link href="/repertorio" className="text-sm text-primary hover:underline">Repertório</Link>}>
           {reinforcement.length ? (
             <ul className="space-y-1.5 text-sm">
-              {reinforcement.slice(0, 10).map((r, i) => (
-                <li key={i} className="flex flex-wrap justify-between gap-2">
-                  <Link href={`/repertorio/${r.songId}`} className="hover:underline">
-                    {r.song} · <strong>{r.part}</strong>
-                  </Link>
-                  <span className="text-muted-foreground">{r.assigned === 0 ? "ninguém designado" : `${r.ready}/${r.assigned} prontos`}</span>
+              {reinforcement.slice(0, 8).map((r, i) => (
+                <li key={i}>
+                  <Link href={`/repertorio/${r.songId}`} className="font-medium hover:underline">
+                    {r.song}
+                  </Link>{" "}
+                  <span className="text-muted-foreground">· {r.arrangement}</span>
+                  <span className="block text-muted-foreground">{r.parts.join(" · ")}</span>
                 </li>
               ))}
             </ul>

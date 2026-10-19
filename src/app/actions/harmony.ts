@@ -7,7 +7,7 @@ import { createClient } from "@/lib/supabase/server";
 import { translateDbError, type ActionResult } from "@/lib/action-result";
 
 const bookmarkSchema = z.object({
-  arrangementId: z.uuid(),
+  arrangementId: z.guid(),
   start: z.number().int().min(1).max(999),
   end: z.number().int().min(1).max(999),
   note: z.string().trim().max(300).optional(),

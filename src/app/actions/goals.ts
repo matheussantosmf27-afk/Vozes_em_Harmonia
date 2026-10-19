@@ -24,7 +24,7 @@ export async function updateGoalStatus(id: string, status: z.infer<typeof status
 }
 
 const goalSchema = z.object({
-  userId: z.uuid(),
+  userId: z.guid(),
   title: z.string().trim().min(1).max(160),
   description: z.string().trim().max(2000).default(""),
   horizon: z.coerce.number().refine((n) => [1, 4, 8, 12].includes(n), "Prazo inválido"),

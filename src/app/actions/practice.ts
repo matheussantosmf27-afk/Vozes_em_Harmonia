@@ -8,7 +8,7 @@ import { translateDbError, type ActionResult } from "@/lib/action-result";
 import type { Json } from "@/lib/supabase/database.types";
 
 const attemptSchema = z.object({
-  exerciseId: z.uuid().optional(),
+  exerciseId: z.guid().optional(),
   exerciseSlug: z.string().regex(/^[a-z0-9-]+$/).optional(),
   score: z.number().min(0).max(1),
   correct: z.number().int().min(0),

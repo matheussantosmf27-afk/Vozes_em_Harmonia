@@ -165,6 +165,15 @@ select tests.fails($$update public.rehearsal_tasks set title = 'outra'$$, 'respo
 select tests.ok((select count(*) from public.rehearsal_attendance) = 1, 'integrante vê apenas a própria presença');
 commit;
 
+-- Autoavaliações não elevam o domínio acima de "familiarização"
+begin;
+select tests.as_user('00000000-0000-0000-0000-0000000000b1');
+insert into public.exercise_attempts (user_id, exercise_id, score, details, created_at)
+select '00000000-0000-0000-0000-0000000000b1', id, 1, '{"selfReported": true}', now() - (g || ' days')::interval
+  from public.exercises, generate_series(0, 5) g where slug = 'ex-teste-nota';
+select tests.ok((select level from public.skill_mastery where user_id = '00000000-0000-0000-0000-0000000000b1' and skill_slug = 'teste-afinacao') = 2, 'autoavaliação conta só como familiarização');
+commit;
+
 -- Exclusão de conta (LGPD)
 begin;
 select tests.as_user('00000000-0000-0000-0000-0000000000d1');

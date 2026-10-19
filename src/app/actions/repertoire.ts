@@ -17,7 +17,7 @@ const opt = (max: number) => z.string().trim().max(max).optional().transform((v)
 
 const repertoireSchema = z
   .object({
-    id: z.uuid().optional(),
+    id: z.guid().optional(),
     title: z.string().trim().min(1, "Informe o título.").max(200),
     composer: opt(200),
     lyricist: opt(200),
@@ -78,7 +78,7 @@ export async function deleteRepertoire(id: string) {
 
 const noteSchema = z.object({ p: z.number().int().min(0).max(127).nullable(), s: z.number().min(0).max(10000), d: z.number().positive().max(1000), l: z.string().max(40).optional() });
 const arrangementSchema = z.object({
-  repertoireId: z.uuid(),
+  repertoireId: z.guid(),
   title: z.string().trim().min(1).max(160),
   formation: z.enum(FORMATIONS),
   keyName: z.string().trim().max(40).optional(),
@@ -187,13 +187,13 @@ export async function removeAssignment(id: string, repertoireId: string): Promis
 }
 
 const mediaSchema = z.object({
-  repertoireId: z.uuid(),
+  repertoireId: z.guid(),
   path: z.string().min(3).max(400),
   title: z.string().trim().min(1).max(200),
   kind: z.enum(["audio", "midi", "musicxml", "pdf", "imagem", "outro"]),
   mimeType: z.string().max(120),
   sizeBytes: z.number().int().min(0),
-  vocalPartId: z.uuid().nullable(),
+  vocalPartId: z.guid().nullable(),
   licenseNote: z.string().trim().max(500).optional(),
 });
 

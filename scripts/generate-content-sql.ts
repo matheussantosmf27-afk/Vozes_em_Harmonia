@@ -80,7 +80,7 @@ out("-- Repertório de treino (material da plataforma)");
 for (const r of REPERTOIRE) {
   out(
     `insert into public.repertoire (id, title, composer, lyricist, source, copyright_info, license_status, original_key, group_key, tempo_bpm, time_signature, lyrics, chords, difficulty, categories, formation, voices_required, director_notes, status) values (` +
-      `${id(`repertoire:${r.key}`)}, ${q(r.title)}, ${q(r.composer)}, ${q(r.lyricist)}, ${q(r.source)}, ${q(r.copyright)}, ${q(r.license)}, ${q(r.originalKey)}, ${q(r.groupKey)}, ${r.tempo}, ${q(r.timeSignature)}, ${q(r.lyrics)}, ${q(r.chords)}, ${r.difficulty}, ${arr(r.categories)}, ${q(r.formation)}, ${r.voicesRequired}, ${q(r.notes)}, 'em_estudo')` +
+      `${id(`repertoire:${r.key}`)}, ${q(r.title)}, ${q(r.composer)}, ${q(r.lyricist)}, ${q(r.source)}, ${q(r.copyright)}, ${q(r.license)}, ${q(r.originalKey)}, ${q(r.groupKey)}, ${r.tempo}, ${q(r.timeSignature)}, ${q(r.lyrics)}, ${q(r.chords)}, ${r.difficulty}, ${arr(r.categories)}, ${q(r.formation)}, ${r.voicesRequired}, ${q(r.notes)}, 'planejada')` +
       ` on conflict (id) do update set title = excluded.title, composer = excluded.composer, lyricist = excluded.lyricist, source = excluded.source, copyright_info = excluded.copyright_info, license_status = excluded.license_status, original_key = excluded.original_key, tempo_bpm = excluded.tempo_bpm, time_signature = excluded.time_signature, lyrics = excluded.lyrics, chords = excluded.chords, difficulty = excluded.difficulty, categories = excluded.categories, formation = excluded.formation, voices_required = excluded.voices_required, director_notes = excluded.director_notes;`,
   );
 }

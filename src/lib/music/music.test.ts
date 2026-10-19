@@ -108,3 +108,22 @@ describe("aleatoriedade reprodutível", () => {
     expect(shuffle(createRng(1), [1, 2, 3, 4]).sort()).toEqual([1, 2, 3, 4]);
   });
 });
+
+import { transposeChordSymbol } from "@/components/theory/theory-explorer";
+import { applyLyrics, parseVoice, partLength } from "./notation";
+
+describe("notação e transposição de cifras", () => {
+  it("lê linhas vocais e aplica letra com melismas", () => {
+    const notes = applyLyrics(parseVoice("C4/1 D4/.5 E4/.5 | r/1 G4/1"), "Lou _ vor Deus");
+    expect(partLength(notes)).toBe(4);
+    expect(notes.map((n) => n.l)).toEqual(["Lou", undefined, "vor", undefined, "Deus"]);
+    expect(() => applyLyrics(parseVoice("C4/1"), "a b")).toThrow();
+  });
+
+  it("transpõe cifras mantendo o tipo do acorde", () => {
+    expect(transposeChordSymbol("Am7", 2, false)).toBe("Bm7");
+    expect(transposeChordSymbol("D/F#", -2, false)).toBe("C/E");
+    expect(transposeChordSymbol("Bb", 1, true)).toBe("B");
+    expect(transposeChordSymbol("G", 3, true)).toBe("Bb");
+  });
+});

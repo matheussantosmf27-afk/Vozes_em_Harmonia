@@ -188,6 +188,11 @@ export function ExerciseRunner({ exercise, level = 1, voiceRange, concept, reval
             </div>
           </div>
         )}
+        {persist && !ask && saved === "no" && (
+          <Button size="sm" variant="outline" onClick={() => save()} disabled={pending}>
+            <Save /> Tentar salvar novamente
+          </Button>
+        )}
         {persist && ask && saved === "no" && (
           <div className="space-y-2 rounded-xl border bg-muted/40 p-3 text-sm">
             <p>Deseja salvar este resultado no seu histórico? Salvamos apenas os números (nota, desvio e estabilidade) — nenhuma gravação.</p>
@@ -203,7 +208,7 @@ export function ExerciseRunner({ exercise, level = 1, voiceRange, concept, reval
         )}
         {persist && (
           <p className="text-sm text-muted-foreground" aria-live="polite">
-            {saved === "saving" ? "Salvando…" : saved === "yes" ? "Resultado salvo no seu progresso." : saved === "discarded" ? "Resultado descartado." : !ask ? "Salvando…" : ""}
+            {saved === "saving" ? "Salvando…" : saved === "yes" ? "Resultado salvo no seu progresso." : saved === "discarded" ? "Resultado descartado." : ""}
           </p>
         )}
         <div className="flex flex-wrap gap-2">

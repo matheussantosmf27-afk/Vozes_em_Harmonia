@@ -16,15 +16,15 @@ const agendaItem = z.object({
 });
 
 const rehearsalSchema = z.object({
-  id: z.uuid().optional(),
+  id: z.guid().optional(),
   title: z.string().trim().min(1, "Informe um título.").max(160),
   startsAt: z.string().min(10, "Informe data e horário."),
   durationMinutes: z.number().int().min(5).max(600),
   location: z.string().trim().max(200).optional(),
-  groupId: z.uuid().nullable().optional(),
+  groupId: z.guid().nullable().optional(),
   objectives: z.string().trim().max(4000).default(""),
   agenda: z.array(agendaItem).max(30),
-  repertoire: z.array(z.object({ id: z.uuid(), focus: z.string().trim().max(300).optional() })).max(30),
+  repertoire: z.array(z.object({ id: z.guid(), focus: z.string().trim().max(300).optional() })).max(30),
 });
 
 /** Converte "AAAA-MM-DDTHH:mm" (horário de Brasília) em ISO UTC. */
@@ -90,7 +90,7 @@ export async function deleteRehearsal(id: string) {
 }
 
 const summarySchema = z.object({
-  id: z.uuid(),
+  id: z.guid(),
   status: z.enum(["planejado", "realizado", "cancelado"]),
   learned: z.string().trim().max(4000).optional(),
   revisit: z.string().trim().max(4000).optional(),
@@ -139,7 +139,7 @@ export async function setAttendance(rehearsalId: string, userId: string, status:
 }
 
 const noteSchema = z.object({
-  rehearsalId: z.uuid(),
+  rehearsalId: z.guid(),
   kind: z.enum(["dificuldade", "aprendizado", "retomar", "observacao"]),
   content: z.string().trim().min(1, "Escreva a anotação.").max(4000),
   visible: z.boolean(),
@@ -176,8 +176,8 @@ export async function deleteRehearsalNote(id: string, rehearsalId: string): Prom
 }
 
 const taskSchema = z.object({
-  rehearsalId: z.uuid(),
-  assigneeId: z.union([z.uuid(), z.literal("")]),
+  rehearsalId: z.guid(),
+  assigneeId: z.union([z.guid(), z.literal("")]),
   title: z.string().trim().min(1, "Descreva a tarefa.").max(200),
   description: z.string().trim().max(2000).default(""),
   dueOn: z.string().regex(/^\d{4}-\d{2}-\d{2}$/).optional().or(z.literal("")),
