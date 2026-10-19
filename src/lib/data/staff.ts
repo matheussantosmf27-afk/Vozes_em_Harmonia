@@ -42,7 +42,7 @@ export async function getMembersOverview(days = 30): Promise<MemberOverview[]> {
     const myLogs = (logs ?? []).filter((l) => l.user_id === p.id);
     const daysSet = new Set([...mine.filter((a) => a.created_at >= since).map((a) => localDay(a.created_at)), ...myLogs.filter((l) => l.practiced_on >= since.slice(0, 10)).map((l) => l.practiced_on)]);
     const last = [mine[0]?.created_at, myLogs.map((l) => l.practiced_on).sort().at(-1)].filter(Boolean).sort().at(-1) ?? null;
-    const recent = mine.slice(0, 10);
+    const recent = mine.filter((a) => a.created_at >= since).slice(0, 10);
     const recentAvg = recent.length ? recent.reduce((a, b) => a + Number(b.score), 0) / recent.length : null;
     const myAssess = (assessments ?? []).filter((a) => a.user_id === p.id);
     const latest = myAssess.find((a) => a.kind !== "professor");
