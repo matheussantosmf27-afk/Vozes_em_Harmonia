@@ -190,7 +190,7 @@ export function HarmonyTrainer({ arrangement, parts, bookmarks, assignment, path
   }
 
   const measureOptions = Array.from({ length: measures }, (_, i) => i + 1);
-  const currentMeasure = Math.min(measures, Math.floor(beat / arrangement.beatsPerMeasure) + 1);
+  const currentMeasure = Math.max(1, Math.min(measures, Math.floor(beat / arrangement.beatsPerMeasure) + 1));
   const ratio = stats.voiced ? stats.inTune / stats.voiced : 0;
 
   return (

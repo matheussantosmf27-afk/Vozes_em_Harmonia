@@ -144,6 +144,11 @@ export class MultiPartPlayer {
     const start = (startMeasure - 1) * this.beatsPerMeasure;
     const end = Math.min(this.endBeat, (endMeasure ?? startMeasure) * this.beatsPerMeasure);
     this.loop = end > start ? { start, end } : null;
+    // Se a reprodução já está fora do trecho, recomeça no início dele.
+    if (this.loop && this.playing) {
+      const beat = this.currentBeat();
+      if (beat < this.loop.start || beat >= this.loop.end) this.seek(this.loop.start);
+    }
   }
 
   async play(fromBeat?: number) {
@@ -219,6 +224,11 @@ export class MultiPartPlayer {
     const horizon = c.currentTime + LOOKAHEAD_SEC;
     const loopEnd = this.loop?.end ?? this.endBeat;
 
+    if (this.loop && this.cursorBeat >= loopEnd) {
+      this.anchorTime = c.currentTime + 0.05;
+      this.anchorBeat = this.loop.start;
+      this.cursorBeat = this.loop.start;
+    }
     while (this.beatToTime(this.cursorBeat) < horizon) {
       const from = this.cursorBeat;
       const to = Math.min(loopEnd, from + 0.25);
