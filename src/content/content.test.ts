@@ -5,7 +5,7 @@ import { generateRound, roundCount } from "@/lib/exercises/generators";
 import { applyLyrics, parseVoice, partLength } from "@/lib/music/notation";
 import { createRng } from "@/lib/music/random";
 import { parseNote } from "@/lib/music/notes";
-import type { Block } from "./types";
+import { ILLUSTRATIONS, type Block } from "./types";
 
 const skillSlugs = new Set(SKILLS.map((s) => s.slug));
 const arrangementSlugs = new Set(ARRANGEMENTS.map((a) => a.slug));
@@ -19,9 +19,6 @@ describe("conteúdo pedagógico", () => {
     for (const l of lessons) {
       const c = l.content;
       expect(c.objetivo.length, l.slug).toBeGreaterThan(30);
-      expect(c.explicacao.length, l.slug).toBeGreaterThan(0);
-      expect(c.demonstracao.length, l.slug).toBeGreaterThan(0);
-      expect(c.exercicioGuiado.passos.length, l.slug).toBeGreaterThanOrEqual(3);
       expect(c.pratiqueSozinho.passos.length, l.slug).toBeGreaterThan(0);
       expect(c.errosComuns.length, l.slug).toBeGreaterThan(0);
       expect(c.seguranca.length, l.slug).toBeGreaterThan(0);
@@ -52,7 +49,57 @@ describe("conteúdo pedagógico", () => {
       for (const n of notes) expect(parseNote(n), `${where}: nota ${n}`).not.toBeNull();
       if (b.type === "harmonyLink") expect(arrangementSlugs.has(b.arrangement), `${where}: arranjo ${b.arrangement}`).toBe(true);
     };
-    for (const p of PATHS) for (const l of p.lessons) for (const b of [...l.content.explicacao, ...l.content.demonstracao]) check(b, l.slug);
+    for (const p of PATHS)
+      for (const l of p.lessons)
+        for (const b of [...(l.content.explicacao ?? []), ...(l.content.demonstracao ?? []), ...(l.content.etapas ?? []).flatMap((e) => e.blocos)]) {
+          check(b, l.slug);
+          if (b.type === "check" && b.audio) for (const n of b.audio.notes.flat()) expect(parseNote(n), `${l.slug}: nota ${n}`).not.toBeNull();
+          if (b.type === "check" && b.staff) for (const n of b.staff.notes) expect(parseNote(n), `${l.slug}: nota ${n}`).not.toBeNull();
+          if (b.type === "compare") for (const o of b.options) for (const n of o.notes.flat()) expect(parseNote(n), `${l.slug}: nota ${n}`).not.toBeNull();
+          if (b.type === "singAlong") expect(parseNote(b.note), `${l.slug}: nota ${b.note}`).not.toBeNull();
+        }
+  });
+
+  describe("aulas interativas em etapas", () => {
+    const words = (t: string) => t.trim().split(/\s+/).filter(Boolean).length;
+    const textOf = (b: Block): string[] =>
+      b.type === "p" || b.type === "warning" ? [b.text] : b.type === "tip" || b.type === "callout" ? [b.text] : b.type === "list" ? b.items : [];
+    const INTERACTIVE = new Set(["check", "trueFalse", "compare", "breathing", "timer", "singAlong", "match", "order", "checklist", "reveal", "keyboard", "intervals", "chords", "scales", "rhythm", "audio"]);
+    const QUESTIONS = new Set(["check", "trueFalse", "compare", "match", "order", "reveal"]);
+    const illustrations = new Set<string>(ILLUSTRATIONS);
+
+    for (const p of PATHS)
+      for (const l of p.lessons) {
+        it(`${p.code} · ${l.slug}: etapas curtas, visuais e interativas`, () => {
+          const etapas = l.content.etapas ?? [];
+          expect(etapas.length, "número de etapas").toBeGreaterThanOrEqual(4);
+          expect(etapas.length, "número de etapas").toBeLessThanOrEqual(9);
+          expect(l.content.gancho?.length ?? 0, "gancho").toBeGreaterThan(20);
+          const all = etapas.flatMap((e) => e.blocos);
+          for (const e of etapas) {
+            expect(e.blocos.length, `etapa “${e.titulo}” vazia`).toBeGreaterThan(0);
+            const w = e.blocos.flatMap(textOf).reduce((a, t) => a + words(t), 0);
+            expect(w, `etapa “${e.titulo}”: ${w} palavras de texto (máx. 110)`).toBeLessThanOrEqual(110);
+            for (const b of e.blocos) if (b.type === "p") expect(words(b.text), `parágrafo longo em “${e.titulo}”`).toBeLessThanOrEqual(55);
+            expect(e.blocos.some((b) => b.type !== "p" && b.type !== "list"), `etapa “${e.titulo}” só tem texto`).toBe(true);
+          }
+          expect(all.filter((b) => QUESTIONS.has(b.type)).length, "perguntas ao longo da aula").toBeGreaterThanOrEqual(2);
+          expect(new Set(all.filter((b) => INTERACTIVE.has(b.type)).map((b) => b.type)).size, "variedade de interações").toBeGreaterThanOrEqual(3);
+          expect(all.some((b) => b.type === "illustration" || (b.type === "check" && b.illustration)), "ilustração").toBe(true);
+          for (const b of all) {
+            if (b.type === "illustration") expect(illustrations.has(b.name), `ilustração ${b.name}`).toBe(true);
+            if (b.type === "check") {
+              expect(b.answer, b.question).toBeLessThan(b.options.length);
+              expect(b.options.length, b.question).toBeGreaterThanOrEqual(2);
+              if (b.illustration) expect(illustrations.has(b.illustration), `ilustração ${b.illustration}`).toBe(true);
+            }
+            if (b.type === "compare" && b.answer !== undefined) expect(b.answer).toBeLessThan(b.options.length);
+            if (b.type === "match") expect(b.pairs.length).toBeGreaterThanOrEqual(3);
+            if (b.type === "order") expect(b.items.length).toBeGreaterThanOrEqual(3);
+            if (b.type === "trueFalse") expect(b.items.length).toBeGreaterThanOrEqual(2);
+          }
+        });
+      }
   });
 
   it("tem configurações válidas e gera rodadas para todas as atividades", () => {
