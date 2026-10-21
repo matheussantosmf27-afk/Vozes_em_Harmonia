@@ -228,50 +228,123 @@ export const trilhaA: PathDef = {
       content: {
         objetivo:
           "Conhecer e executar uma rotina de aquecimento de 8 a 10 minutos — corpo, respiração, vibração, deslizes e articulação — e um desaquecimento de 2 minutos após o ensaio.",
-        explicacao: [
+        gancho: "Nenhum atleta entra em campo sem aquecer. Em 10 minutos, você vai preparar a voz do jeito certo e sentir a diferença no ensaio.",
+        etapas: [
           {
-            type: "p",
-            text: "As pregas vocais são um tecido delicado coordenado por pequenos músculos. Assim como um atleta não corre sem alongar, quem canta precisa preparar a musculatura aos poucos: do mais suave para o mais intenso, da região média para as extremidades, do som fechado para o aberto.",
-          },
-          {
-            type: "list",
-            ordered: true,
-            items: [
-              "Corpo (1 min): alongar pescoço lateralmente, rolar ombros, soltar a mandíbula.",
-              "Respiração (1 min): inspirar pelo nariz expandindo costelas; soltar o ar em “sss” contínuo por 8 a 12 tempos.",
-              "Vibração (2 min): vibração de lábios (“brrr”) ou de língua (“trrr”) em notas sustentadas e pequenas escalas.",
-              "Deslizes (2 min): sirene suave em “u” do grave ao agudo confortável e de volta, sem empurrar.",
-              "Escalas em vogais (2 min): cinco notas (Dó–Ré–Mi–Fá–Sol–Fá–Mi–Ré–Dó) em “mi”, “mê”, “má”, “mô”, “mu”, subindo meio-tom por vez até o limite confortável.",
-              "Articulação (1 min): trava-línguas e as consoantes do repertório do dia.",
+            titulo: "Por que aquecer?",
+            tipo: "descobrir",
+            blocos: [
+              { type: "p", text: "As pregas vocais são um tecido delicado, coordenado por pequenos músculos. Como um atleta antes do jogo, quem canta prepara essa musculatura aos poucos." },
+              { type: "illustration", name: "aquecimento", caption: "Do suave ao intenso, do meio para as pontas." },
+              {
+                type: "callout",
+                icon: "ideia",
+                title: "Três regras de ouro",
+                text: "Do suave para o intenso. Da região média para as extremidades. Do som fechado (“hum”, “u”) para o aberto (“á”).",
+              },
+              {
+                type: "check",
+                question: "Qual é o jeito mais seguro de começar o aquecimento?",
+                options: ["Na região média, com volume moderado", "Pela nota mais aguda, para “abrir” a voz", "Com o trecho mais difícil do repertório", "Gritando um pouco para soltar"],
+                answer: 0,
+                explain: "Começar no meio e suave prepara a musculatura sem sobrecarga. Agudos e volume vêm depois, aos poucos.",
+              },
             ],
           },
           {
-            type: "tip",
-            title: "Por que a vibração de lábios funciona",
-            text: "Ela cria uma leve resistência na saída do ar que equilibra a pressão sobre as pregas vocais. É um dos exercícios mais seguros para começar o dia e para recuperar a voz depois do ensaio.",
+            titulo: "Corpo e ar (2 minutos)",
+            tipo: "experimentar",
+            blocos: [
+              { type: "timer", instruction: "Incline a cabeça devagar para um lado e para o outro, role os ombros para trás e deixe a mandíbula cair solta.", seconds: 60 },
+              { type: "p", text: "Agora inspire pelo nariz, expandindo as costelas, e solte o ar num “sss” contínuo." },
+              { type: "breathing", inhale: 4, exhale: 8, rounds: 4, exhaleOn: "sss" },
+              { type: "tip", text: "Ficou fácil? Aos poucos, estique o “sss” para 12 tempos." },
+            ],
           },
           {
-            type: "p",
-            text: "O desaquecimento leva a voz de volta à fala: após o ensaio, faça 1 minuto de vibração de lábios em deslizes descendentes e alguns bocejos-suspiros suaves, terminando na sua altura de fala.",
+            titulo: "O motorzinho dos lábios",
+            tipo: "experimentar",
+            blocos: [
+              {
+                type: "callout",
+                icon: "ideia",
+                title: "Por que o “brrr” funciona",
+                text: "A vibração de lábios cria uma leve resistência na saída do ar. Isso equilibra a pressão sobre as pregas vocais com pouco esforço. É ótima para começar o dia e para recuperar a voz depois do ensaio.",
+              },
+              { type: "audio", label: "Escala de cinco notas em Dó (vozes femininas)", notes: ["C4", "D4", "E4", "F4", "G4", "F4", "E4", "D4", "C4"], tempo: 120 },
+              { type: "audio", label: "Escala de cinco notas em Dó (vozes masculinas)", notes: ["C3", "D3", "E3", "F3", "G3", "F3", "E3", "D3", "C3"], tempo: 120 },
+              {
+                type: "timer",
+                instruction: "Faça “brrr” acompanhando a escala. Se os lábios travarem, apoie os dedos de leve nas bochechas. Não saiu? Use a vibração de língua: “trrr”.",
+                seconds: 30,
+                reps: 2,
+              },
+            ],
+          },
+          {
+            titulo: "A sirene que sobe e desce",
+            tipo: "experimentar",
+            blocos: [
+              { type: "p", text: "Em “u”, deslize suavemente do grave ao agudo confortável e volte, como um elevador. Use o arpejo como guia." },
+              { type: "audio", label: "Arpejo para deslize (Dó–Mi–Sol–Mi–Dó)", notes: ["C4", "E4", "G4", "E4", "C4"], tempo: 100 },
+              { type: "timer", instruction: "Sirene em “u”: suba e desça bem suave, sem empurrar o topo.", seconds: 8, reps: 3 },
+              {
+                type: "trueFalse",
+                items: [
+                  { statement: "Se o topo da sirene pesar, devo empurrar mais forte.", answer: false, explain: "Pare antes do esforço. O aquecimento expande a voz aos poucos, sem empurrar." },
+                  { statement: "Um bom aquecimento deixa a voz cansada.", answer: false, explain: "Aquecimento não deve doer nem cansar. Se cansar, diminua o volume e a extensão." },
+                ],
+              },
+            ],
+          },
+          {
+            titulo: "Vogais em cinco notas",
+            tipo: "experimentar",
+            blocos: [
+              { type: "p", text: "Cante Dó–Ré–Mi–Fá–Sol–Fá–Mi–Ré–Dó em “mi”, “mê”, “má”, “mô”, “mu”. A cada repetição, suba meio-tom, só enquanto estiver confortável." },
+              { type: "singAlong", instruction: "Comece pela primeira nota da escala: cante “mi” e sustente, suave.", note: "C4", seconds: 3 },
+              {
+                type: "reveal",
+                prompt: "Até onde subir a escala?",
+                answer: "Até onde estiver confortável, sem esforço. Não existe uma nota certa para todos: cada voz tem seu limite, e ele pode mudar de um dia para o outro.",
+              },
+            ],
+          },
+          {
+            titulo: "Acorde a língua",
+            tipo: "experimentar",
+            blocos: [
+              { type: "p", text: "Para fechar: articulação. Trava-línguas e as consoantes do repertório do dia." },
+              { type: "timer", instruction: "Diga, articulando sem pressa: “O rato roeu a roupa do rei de Roma”. Depois, um pouco mais rápido.", seconds: 20 },
+              { type: "toolLink", tool: "aquecimento", label: "Abrir a rotina guiada: ela toca as notas e avança sozinha" },
+            ],
+          },
+          {
+            titulo: "Depois do ensaio: desaquecer",
+            tipo: "aplicar",
+            blocos: [
+              { type: "p", text: "O desaquecimento leva a voz de volta à fala. Após o ensaio, faça 1 minuto de “brrr” em deslizes descendentes e alguns bocejos-suspiros suaves, terminando na altura da sua fala." },
+              {
+                type: "check",
+                question: "Acabou o ensaio e a garganta parece “arranhando”. O que fazer?",
+                options: ["Deslizes descendentes em “brrr” e um gole de água", "Pigarrear até limpar", "Cantar as notas mais agudas para fechar", "Sussurrar com força o resto da noite"],
+                answer: 0,
+                explain: "Deslizes suaves ajudam a voz a se recuperar. Pigarrear e sussurrar forçado atritam as pregas vocais; prefira engolir em seco ou beber água.",
+              },
+            ],
+          },
+          {
+            titulo: "Monte a sua rotina",
+            tipo: "checar",
+            blocos: [
+              {
+                type: "order",
+                prompt: "Coloque as etapas do aquecimento na ordem.",
+                items: ["Corpo: pescoço, ombros e mandíbula", "Respiração em “sss”", "Vibração de lábios ou de língua", "Sirene em “u”", "Escala de cinco notas em vogais", "Trava-línguas"],
+              },
+            ],
           },
         ],
-        demonstracao: [
-          { type: "audio", label: "Escala de cinco notas em Dó (vozes femininas)", notes: ["C4", "D4", "E4", "F4", "G4", "F4", "E4", "D4", "C4"], tempo: 120 },
-          { type: "audio", label: "Escala de cinco notas em Dó (vozes masculinas)", notes: ["C3", "D3", "E3", "F3", "G3", "F3", "E3", "D3", "C3"], tempo: 120 },
-          { type: "audio", label: "Arpejo para deslize (Dó–Mi–Sol–Mi–Dó)", notes: ["C4", "E4", "G4", "E4", "C4"], tempo: 100 },
-          { type: "toolLink", tool: "aquecimento", label: "Abrir a rotina guiada de aquecimento com temporizador" },
-        ],
-        exercicioGuiado: {
-          intro: "Siga a rotina guiada na página “Treinar minha voz”. Ela toca as notas de referência e avança automaticamente.",
-          passos: [
-            "Faça os alongamentos de pescoço e ombros (1 minuto).",
-            "Respire em 4 tempos e solte o ar em “sss” por 8 tempos. Repita 4 vezes.",
-            "Vibração de lábios na escala de cinco notas, começando numa nota média.",
-            "Sirene em “u”: suba e desça suavemente, como um elevador, sem forçar o topo.",
-            "Escala de cinco notas em “mi” e “má”, subindo meio-tom a cada repetição enquanto estiver confortável.",
-            "Termine com um trava-língua: “O rato roeu a roupa do rei de Roma”, articulado sem pressa.",
-          ],
-        },
         pratiqueSozinho: {
           passos: [
             "Use a rotina guiada antes de cada estudo e antes do ensaio.",
@@ -355,46 +428,127 @@ export const trilhaA: PathDef = {
       content: {
         objetivo:
           "Inspirar sem tensão, administrar a saída do ar para sustentar frases e planejar as respirações de uma música de acordo com o texto e a melodia.",
-        explicacao: [
+        gancho: "Já ficou sem ar no meio de um hino? O segredo não é ter mais fôlego: é saber onde o ar entra e onde respirar.",
+        etapas: [
           {
-            type: "p",
-            text: "Cantar exige mais ar e mais controle do que falar. Na inspiração, o diafragma desce e as costelas se expandem — por isso sentimos a cintura e as costas se abrirem. Na expiração cantada, o desafio é soltar o ar aos poucos, de forma constante, sem prender e sem empurrar.",
-          },
-          {
-            type: "list",
-            items: [
-              "Inspire pelo nariz quando houver tempo e pela boca nas respirações rápidas, sem barulho.",
-              "Sinta a expansão na cintura, nas costelas laterais e nas costas — não nos ombros.",
-              "Ao cantar, mantenha a sensação de “abertura” das costelas por mais tempo, em vez de esvaziar de uma vez.",
-              "Não encha o pulmão ao máximo: ar demais gera tensão. Inspire o necessário para a frase.",
+            titulo: "Onde o ar realmente entra",
+            tipo: "descobrir",
+            blocos: [
+              { type: "p", text: "Cantar pede mais ar e mais controle do que falar. Na inspiração, o diafragma desce e as costelas se expandem. Por isso sentimos a cintura e as costas se abrirem." },
+              { type: "illustration", name: "respiracao", caption: "O diafragma desce; costelas e cintura se abrem." },
+              {
+                type: "check",
+                question: "Ao inspirar para cantar, onde você deve sentir a expansão?",
+                options: ["Cintura, costelas laterais e costas", "Nos ombros, que sobem", "Só no peito alto", "Na garganta"],
+                answer: 0,
+                explain: "O diafragma desce e as costelas se abrem para os lados e para trás. Ombros que sobem indicam uma respiração alta e tensa.",
+              },
             ],
           },
           {
-            type: "p",
-            text: "Fraseado é a forma como conduzimos uma frase musical do início ao fim. Respirar no meio de uma palavra ou de uma ideia quebra o sentido do texto. Por isso marcamos na partitura (com uma vírgula ou um “V”) onde respirar, normalmente nas pausas, nas vírgulas do texto e no fim das frases.",
+            titulo: "Sinta com as mãos",
+            tipo: "experimentar",
+            blocos: [
+              { type: "p", text: "Mãos na cintura, polegares para trás. Inspire e sinta as mãos se afastarem, sem subir os ombros." },
+              { type: "breathing", inhale: 4, exhale: 4, rounds: 3 },
+              {
+                type: "list",
+                items: [
+                  "Pelo nariz quando houver tempo; pela boca nas respirações rápidas, sem barulho.",
+                  "Não encha ao máximo: ar demais gera tensão. Inspire o necessário para a frase.",
+                ],
+              },
+            ],
           },
           {
-            type: "tip",
-            title: "Respiração em grupo",
-            text: "Num coral, frases muito longas podem ser cantadas com “respiração escalonada”: cada pessoa respira em um lugar diferente, discretamente, para que o som do naipe nunca pare. O diretor indica quando usar.",
+            titulo: "Solte o ar aos poucos",
+            tipo: "experimentar",
+            blocos: [
+              { type: "p", text: "Agora o desafio: soltar o ar de forma constante, sem prender e sem empurrar. Mantenha as costelas “abertas” por mais tempo, em vez de esvaziar de uma vez." },
+              { type: "breathing", inhale: 4, exhale: 8, rounds: 3, exhaleOn: "sss" },
+              { type: "tip", title: "Próximo nível", text: "Conseguiu 8? Tente 12 e depois 16 tempos. Troque o “sss” por “fff” e depois por “vvv” (com som), com a mesma constância." },
+              { type: "toolLink", tool: "metronomo", label: "Abrir o metrônomo a 60 bpm (um tempo por segundo)" },
+            ],
+          },
+          {
+            titulo: "Uma frase, uma respiração",
+            tipo: "ouvir",
+            blocos: [
+              { type: "p", text: "Ouça e cante esta frase em “lu”, respirando só no início. Se faltar ar, cante mais suave, não mais forte." },
+              { type: "audio", label: "Frase para sustentar (vozes femininas)", notes: ["G4", "G4", "A4", "G4", "F4", "E4", "D4", "C4"], tempo: 66 },
+              { type: "audio", label: "Frase para sustentar (vozes masculinas)", notes: ["G3", "G3", "A3", "G3", "F3", "E3", "D3", "C3"], tempo: 66 },
+              {
+                type: "trueFalse",
+                items: [
+                  { statement: "Quanto mais ar eu puxar, melhor vou cantar.", answer: false, explain: "Ar demais gera tensão e dificulta o controle. Inspire o necessário para a frase." },
+                  { statement: "Prender o ar antes de cantar dá mais apoio.", answer: false, explain: "A inspiração deve virar som sem uma pausa travada na garganta." },
+                  { statement: "Começar a frase com o mesmo fluxo de ar do final ajuda a economizar.", answer: true, explain: "Quem gasta tudo nas primeiras notas fica sem ar no fim. Fluxo constante do início ao fim." },
+                ],
+              },
+            ],
+          },
+          {
+            titulo: "Onde respirar?",
+            tipo: "descobrir",
+            blocos: [
+              { type: "illustration", name: "frase-respiracao", caption: "O “V” marca o lugar da respiração." },
+              { type: "p", text: "Fraseado é conduzir a frase do início ao fim. Respirar no meio de uma palavra ou de uma ideia quebra o sentido do texto. Por isso marcamos com vírgula ou “V” onde respirar: nas pausas, nas vírgulas do texto e no fim das frases." },
+              {
+                type: "check",
+                question: "Qual destas respirações quebra o sentido do texto?",
+                options: ["No meio da palavra “Se-nhor”", "Na vírgula do texto", "Na pausa entre duas frases", "No fim da estrofe"],
+                answer: 0,
+                explain: "Respirar no meio de uma palavra corta a mensagem. Pausas, vírgulas e finais de frase são os lugares naturais.",
+              },
+            ],
+          },
+          {
+            titulo: "Respirar em equipe",
+            tipo: "descobrir",
+            blocos: [
+              {
+                type: "callout",
+                icon: "coracao",
+                title: "Respiração escalonada",
+                text: "Em frases muito longas, cada pessoa do naipe respira num lugar diferente, discretamente. Assim o som do naipe nunca para. O regente indica quando usar.",
+              },
+              {
+                type: "reveal",
+                prompt: "Numa frase longa e sem pausa, o que aconteceria se o naipe inteiro respirasse no mesmo lugar?",
+                answer: "O som pararia de repente, abrindo um buraco na música. Respirando em momentos diferentes, cada um sai e volta discretamente e o som continua.",
+              },
+            ],
+          },
+          {
+            titulo: "Sua vez: marque um hino",
+            tipo: "aplicar",
+            blocos: [
+              { type: "p", text: "Escolha um hino conhecido, escreva a letra de uma estrofe e marque com “V” onde vai respirar." },
+              {
+                type: "checklist",
+                title: "Confira suas marcações",
+                items: ["Nenhum “V” no meio de palavra", "Respirações em vírgulas, pausas ou fins de frase", "Nenhuma ideia do texto cortada ao meio", "Cantei a estrofe respeitando as marcações"],
+              },
+              { type: "toolLink", tool: "gravador", label: "Grave a estrofe: alguma respiração cortou uma palavra?" },
+            ],
+          },
+          {
+            titulo: "Juntando tudo",
+            tipo: "checar",
+            blocos: [
+              {
+                type: "match",
+                prompt: "Ligue cada problema à sua correção.",
+                pairs: [
+                  { left: "Ombros sobem ao inspirar", right: "Expandir cintura e costelas" },
+                  { left: "Ar acaba nas primeiras notas", right: "Fluxo constante, costelas abertas" },
+                  { left: "Inspiração barulhenta", right: "Garganta aberta, como num bocejo discreto" },
+                  { left: "Respirar no meio da palavra", right: "Planejar as respirações no texto" },
+                ],
+              },
+            ],
           },
         ],
-        demonstracao: [
-          { type: "rhythm", pattern: "q q q q q q q q", bpm: 60, label: "Pulsação lenta (60 bpm) para contar a respiração" },
-          { type: "audio", label: "Frase para sustentar (vozes femininas)", notes: ["G4", "G4", "A4", "G4", "F4", "E4", "D4", "C4"], tempo: 66 },
-          { type: "audio", label: "Frase para sustentar (vozes masculinas)", notes: ["G3", "G3", "A3", "G3", "F3", "E3", "D3", "C3"], tempo: 66 },
-          { type: "toolLink", tool: "metronomo", label: "Abrir o metrônomo para contar os tempos" },
-        ],
-        exercicioGuiado: {
-          intro: "Use o metrônomo a 60 bpm (um tempo por segundo).",
-          passos: [
-            "Mãos na cintura, polegares para trás: inspire em 4 tempos sentindo as mãos se afastarem.",
-            "Solte o ar em “sss” constante por 8 tempos. Depois tente 12 e 16, sem esvaziar de uma vez no início.",
-            "Repita com “fff” e depois com “vvv” (com som), mantendo a mesma constância.",
-            "Cante a frase de demonstração em “lu”, respirando somente no início. Se faltar ar, cante mais suave em vez de mais forte.",
-            "Escolha um hino conhecido, escreva a letra de uma estrofe e marque com “V” onde vai respirar.",
-          ],
-        },
         pratiqueSozinho: {
           passos: [
             "3 séries de “sss” por 12 a 16 tempos.",
@@ -476,44 +630,130 @@ export const trilhaA: PathDef = {
       content: {
         objetivo:
           "Produzir um som equilibrado — nem soproso, nem apertado — usando a ressonância para projetar a voz sem aumentar o esforço.",
-        explicacao: [
+        gancho: "Dá para ser ouvido(a) lá no fundo da igreja sem gritar? Dá! O segredo está no começo do som e nos espaços do seu rosto.",
+        etapas: [
           {
-            type: "p",
-            text: "A emissão é o início do som. Ela pode ser soprosa (sai muito ar e pouca nota), apertada (a garganta fecha e o som fica duro) ou equilibrada (o som começa limpo, com o ar e as pregas vocais coordenados). O objetivo é a emissão equilibrada.",
-          },
-          {
-            type: "p",
-            text: "Ressonância é a amplificação do som nas cavidades acima das pregas vocais: garganta, boca e cavidade nasal. Ajustes pequenos — espaço na boca, posição da língua, a sensação de som “à frente” no rosto — fazem a voz ser ouvida com clareza sem gritar.",
-          },
-          {
-            type: "list",
-            items: [
-              "Ataque equilibrado: imagine dizer “ah” suavemente, como quem concorda com algo agradável.",
-              "Espaço interno: a sensação do início de um bocejo, com o palato mole elevado, sem abaixar a língua à força.",
-              "Som à frente: no “hum” e no “nhã”, sinta vibração nos lábios, nariz e maçãs do rosto.",
-              "Volume vem do equilíbrio entre ar e ressonância, não de apertar a garganta.",
+            titulo: "Três jeitos de começar um som",
+            tipo: "descobrir",
+            blocos: [
+              { type: "p", text: "A emissão é o início do som. Ela pode ser de três tipos, e o nosso objetivo é a equilibrada." },
+              {
+                type: "list",
+                items: ["Soprosa: sai muito ar e pouca nota.", "Apertada: a garganta fecha e o som fica duro.", "Equilibrada: o som começa limpo, com o ar e as pregas vocais coordenados."],
+              },
+              {
+                type: "callout",
+                icon: "ideia",
+                title: "O “ã-hã” de concordância",
+                text: "Diga “ã-hã” como quem concorda com algo agradável. Esse começo suave e limpo é o ataque equilibrado.",
+              },
             ],
           },
           {
-            type: "warning",
-            text: "Rouquidão frequente, dor ou sensação de “bola” na garganta não são normais. Interrompa o exercício e procure um profissional de saúde (otorrinolaringologista ou fonoaudiólogo). Esta plataforma não faz diagnóstico.",
+            titulo: "Experimente os três",
+            tipo: "experimentar",
+            blocos: [
+              {
+                type: "timer",
+                instruction: "Numa nota confortável, cante “ah” soproso (com muito ar), depois “ah” apertado e, por fim, o “ah” equilibrado do “ã-hã”. Perceba a diferença.",
+                seconds: 30,
+              },
+              {
+                type: "check",
+                question: "Qual emissão é a mais saudável e eficiente?",
+                options: ["Equilibrada", "Soprosa", "Apertada"],
+                answer: 0,
+                explain: "Na equilibrada, ar e pregas vocais trabalham juntos: som limpo, sem desperdiçar ar e sem apertar a garganta.",
+              },
+            ],
+          },
+          {
+            titulo: "Onde o som ganha corpo",
+            tipo: "descobrir",
+            blocos: [
+              { type: "illustration", name: "ressonancia", caption: "Garganta, boca e cavidade nasal amplificam o som." },
+              { type: "p", text: "Ressonância é a amplificação do som nas cavidades acima das pregas vocais: garganta, boca e cavidade nasal. Pequenos ajustes fazem a voz ser ouvida com clareza sem gritar." },
+              {
+                type: "callout",
+                icon: "musica",
+                title: "Espaço de bocejo",
+                text: "Sinta o início de um bocejo: o palato mole sobe e a boca ganha espaço. A língua fica relaxada, tocando os dentes de baixo, sem afundar.",
+              },
+            ],
+          },
+          {
+            titulo: "Do “hum” ao “á”",
+            tipo: "experimentar",
+            blocos: [
+              { type: "p", text: "Faça “hum” e abra para “á” sem perder a vibração à frente: “hummmm-á”. Sinta lábios, nariz e maçãs do rosto vibrando." },
+              { type: "singAlong", instruction: "Ouça a nota e cante “hummmm-á”, mantendo a vibração à frente.", note: "E4", seconds: 4 },
+              {
+                type: "reveal",
+                prompt: "Ao abrir para “á”, a vibração no rosto continuou?",
+                answer: "Se sumiu, a garganta pode ter apertado ou a língua afundado. Volte ao “hum”, mantenha o espaço de bocejo e abra devagar.",
+              },
+              { type: "toolLink", tool: "afinador", label: "Sustente a nota no treinador de afinação" },
+            ],
+          },
+          {
+            titulo: "Brilho com “nhã”",
+            tipo: "ouvir",
+            blocos: [
+              { type: "audio", label: "Padrão “nhã-nhã-nhã” (Sol–Fá–Mi–Ré–Dó)", notes: ["G4", "F4", "E4", "D4", "C4"], tempo: 100 },
+              { type: "p", text: "Cante o padrão em “nhã”, descendo as cinco notas (vozes graves, uma oitava abaixo). Depois cante a mesma melodia em “lá”, mantendo o mesmo brilho." },
+              { type: "timer", instruction: "Alterne: uma vez em “nhã”, uma vez em “lá”. O “lá” ficou tão brilhante quanto o “nhã”?", seconds: 10, reps: 3 },
+            ],
+          },
+          {
+            titulo: "Mais forte sem apertar",
+            tipo: "aplicar",
+            blocos: [
+              { type: "p", text: "Para cantar mais forte, aumente o fluxo de ar e o espaço interno. O pescoço continua solto." },
+              {
+                type: "trueFalse",
+                items: [
+                  { statement: "Para ser ouvido(a), preciso apertar a garganta.", answer: false, explain: "Volume vem do equilíbrio entre ar e ressonância, não de força na garganta." },
+                  { statement: "Afundar a língua cria mais espaço para o som.", answer: false, explain: "O espaço vem do palato mole elevado. A língua fica relaxada, tocando os dentes de baixo." },
+                  { statement: "Sentir o som “à frente” no rosto ajuda a projetar.", answer: true, explain: "No “hum” e no “nhã”, a vibração nos lábios e no rosto mostra a ressonância trabalhando a seu favor." },
+                ],
+              },
+              { type: "timer", instruction: "Cante uma frase de hino em volume médio e depois mais forte, só com mais ar e mais espaço.", seconds: 30 },
+            ],
+          },
+          {
+            titulo: "Sinais de alerta",
+            tipo: "aplicar",
+            blocos: [
+              {
+                type: "warning",
+                text: "Rouquidão frequente, dor ou sensação de “bola” na garganta não são normais. Interrompa o exercício e procure um profissional de saúde (otorrinolaringologista ou fonoaudiólogo). Esta plataforma não faz diagnóstico.",
+              },
+              {
+                type: "check",
+                question: "Você fica rouco(a) depois de quase todo ensaio. O que fazer?",
+                options: ["Procurar um otorrino ou fonoaudiólogo", "Cantar mais forte para “abrir” a voz", "Ignorar: é sinal de voz aquecida", "Pigarrear até passar"],
+                answer: 0,
+                explain: "Rouquidão frequente não é normal nem sinal de esforço “bom”. Quem avalia é um profissional de saúde.",
+              },
+            ],
+          },
+          {
+            titulo: "Juntando tudo",
+            tipo: "checar",
+            blocos: [
+              {
+                type: "match",
+                prompt: "Ligue cada termo ao que ele significa.",
+                pairs: [
+                  { left: "Emissão soprosa", right: "Muito ar e pouca nota" },
+                  { left: "Emissão apertada", right: "Garganta fechada, som duro" },
+                  { left: "Emissão equilibrada", right: "Ar e pregas vocais coordenados" },
+                  { left: "Ressonância", right: "Amplificação nas cavidades acima das pregas" },
+                ],
+              },
+            ],
           },
         ],
-        demonstracao: [
-          { type: "audio", label: "Nota sustentada para “hum → á” (vozes femininas)", notes: ["E4"], tempo: 20 },
-          { type: "audio", label: "Nota sustentada para “hum → á” (vozes masculinas)", notes: ["E3"], tempo: 20 },
-          { type: "audio", label: "Padrão “nhã-nhã-nhã” (Sol–Fá–Mi–Ré–Dó)", notes: ["G4", "F4", "E4", "D4", "C4"], tempo: 100 },
-          { type: "toolLink", tool: "afinador", label: "Abrir o treinador de afinação para sustentar a nota" },
-        ],
-        exercicioGuiado: {
-          passos: [
-            "Diga “ã-hã” como quem concorda. Repita cantando numa nota confortável: esse é o ataque equilibrado.",
-            "Experimente um “ah” soproso (com muito ar) e um “ah” apertado. Depois volte ao equilibrado e perceba a diferença.",
-            "Faça “hum” na nota de referência e abra para “á” sem mudar a sensação de vibração à frente: “hummmm-á”.",
-            "Cante “nhã-nhã-nhã” descendo cinco notas. Depois cante a mesma melodia em “lá”, mantendo o brilho.",
-            "Cante uma frase de hino em volume médio e depois mais forte, apenas aumentando o ar e o espaço — sem apertar.",
-          ],
-        },
         pratiqueSozinho: {
           passos: ["5 repetições de “hum → á” em notas confortáveis.", "Padrão “nhã” → “lá” subindo meio-tom por vez.", "Uma frase de hino em três volumes: suave, médio e forte."],
           minutos: 8,
@@ -567,48 +807,129 @@ export const trilhaA: PathDef = {
       content: {
         objetivo:
           "Entender o que é afinação, reproduzir notas a partir de uma referência, sustentá-las e reconhecer tendências de cantar acima ou abaixo da nota.",
-        explicacao: [
+        gancho: "No coral, uma voz simples e afinada soa melhor do que uma voz linda fora da nota. Vamos treinar ouvido e voz para acertar o alvo.",
+        etapas: [
           {
-            type: "p",
-            text: "Afinar é fazer a frequência da sua voz coincidir com a nota esperada. Cantar afinado e cantar com boa qualidade vocal são coisas diferentes: uma voz bonita pode estar desafinada, e uma voz simples pode estar perfeitamente afinada. No grupo, a afinação é o que faz os acordes soarem limpos.",
-          },
-          {
-            type: "p",
-            text: "A diferença entre duas alturas muito próximas é medida em cents: 100 cents são um semitom (de uma tecla para a vizinha no teclado). Diferenças de até cerca de 10 a 20 cents passam despercebidas para a maioria das pessoas; acima de 25 a 30 cents já soam “fora”.",
-          },
-          {
-            type: "list",
-            items: [
-              "Dificuldade auditiva: a pessoa não percebe se está acima ou abaixo. Treine primeiro a escuta (Laboratório: grave e agudo, perceber desafinação).",
-              "Dificuldade técnica: percebe, mas a voz não obedece (falta de ar, tensão, nota fora da região confortável).",
-              "Dificuldade de coordenação: acerta devagar, mas erra em frases rápidas ou com outras vozes soando.",
+            titulo: "Acertar o alvo",
+            tipo: "descobrir",
+            blocos: [
+              { type: "p", text: "Afinar é fazer a frequência da sua voz coincidir com a nota esperada. No grupo, a afinação é o que faz os acordes soarem limpos." },
+              { type: "illustration", name: "onda-afinada", caption: "Voz e referência coincidem: o som fica limpo." },
+              {
+                type: "trueFalse",
+                items: [
+                  { statement: "Uma voz bonita está sempre afinada.", answer: false, explain: "Qualidade vocal e afinação são coisas diferentes. Uma voz simples pode estar perfeitamente afinada." },
+                  { statement: "Errar uma tentativa prova que sou desafinado(a).", answer: false, explain: "Uma tentativa não diz nada. Observe a tendência ao longo de vários dias." },
+                ],
+              },
             ],
           },
           {
-            type: "tip",
-            title: "Como encontrar a nota",
-            text: "Ouça a referência em silêncio, imagine o som por dentro e só então cante, suave, numa vogal fechada (“u”). Se a nota estiver longe da sua região, cante-a uma oitava abaixo ou acima: a mesma nota em outra oitava também está afinada.",
+            titulo: "Ouça a diferença",
+            tipo: "ouvir",
+            blocos: [
+              { type: "p", text: "A distância entre alturas próximas é medida em cents: 100 cents são um semitom, de uma tecla para a vizinha. Até 10 a 20 cents quase ninguém percebe; acima de 25 a 30 cents já soa “fora”." },
+              {
+                type: "compare",
+                prompt: "As duas tentam cantar Lá. Qual está afinada?",
+                options: [
+                  { label: "afinada", notes: ["A3"] },
+                  { label: "35 cents abaixo", notes: ["A3"], cents: -35 },
+                ],
+                answer: 0,
+                explain: "A versão abaixo soa levemente “caída”. Com treino curto e frequente, essa diferença fica cada vez mais fácil de ouvir.",
+              },
+            ],
           },
           {
-            type: "p",
-            text: "Quem tende a cantar abaixo (“calando”) costuma estar com pouco ar ou cansado; quem tende a cantar acima costuma estar com tensão ou ansiedade nas entradas. Uma única tentativa não diz que alguém é “desafinado”: observe a tendência ao longo de vários dias.",
+            titulo: "Ouça, imagine, cante",
+            tipo: "experimentar",
+            blocos: [
+              {
+                type: "callout",
+                icon: "ouvido",
+                title: "Ouça por dentro",
+                text: "Ouça a referência, imagine o som em silêncio por 2 segundos e só então cante, suave, numa vogal fechada como “u”.",
+              },
+              { type: "singAlong", instruction: "Ouça o Dó, imagine o som e cante “u” suave na mesma altura.", note: "C4", seconds: 3 },
+              { type: "tip", title: "Comece suave", text: "Com volume moderado é mais fácil ajustar a altura. Repita com três notas diferentes dentro da sua região confortável." },
+            ],
+          },
+          {
+            titulo: "A mesma nota, outra oitava",
+            tipo: "descobrir",
+            blocos: [
+              { type: "p", text: "Se a nota estiver longe da sua região, cante-a uma oitava abaixo ou acima. A mesma nota em outra oitava também está afinada." },
+              { type: "keyboard", from: "C3", to: "C5", highlight: ["C3", "C4", "C5"], label: "As notas Dó em três oitavas" },
+              { type: "audio", label: "Mesma nota em duas oitavas (Dó3 e Dó4)", notes: ["C3", "C4"], tempo: 50 },
+              {
+                type: "check",
+                question: "A referência é Dó4 e você canta Dó3, uma oitava abaixo. Você está…",
+                options: ["Afinado(a): é a mesma nota em outra oitava", "Desafinado(a)", "Cantando outra nota"],
+                answer: 0,
+                explain: "Notas a uma oitava de distância têm o mesmo nome. Cantar a referência em outra oitava é uma forma afinada e segura de responder.",
+              },
+            ],
+          },
+          {
+            titulo: "Treine o controle",
+            tipo: "experimentar",
+            blocos: [
+              { type: "p", text: "No treinador de afinação, sustente a nota e observe o ponteiro. Ajuste devagar até ficar no centro." },
+              { type: "toolLink", tool: "afinador", label: "Abrir o treinador de afinação com microfone" },
+              { type: "timer", instruction: "Cante de propósito um pouco acima, depois um pouco abaixo, e volte ao centro.", seconds: 15, reps: 3 },
+            ],
+          },
+          {
+            titulo: "Por que a nota escapa?",
+            tipo: "descobrir",
+            blocos: [
+              {
+                type: "match",
+                prompt: "Ligue cada tipo de dificuldade ao que acontece.",
+                pairs: [
+                  { left: "Auditiva", right: "Não percebe se está acima ou abaixo" },
+                  { left: "Técnica", right: "Percebe, mas a voz não obedece" },
+                  { left: "De coordenação", right: "Acerta devagar, erra em frases rápidas ou com outras vozes" },
+                ],
+              },
+              { type: "tip", text: "Dificuldade auditiva? Treine primeiro a escuta no Laboratório: grave e agudo, perceber desafinação. Técnica? Confira ar, tensão e se a nota está na sua região confortável." },
+            ],
+          },
+          {
+            titulo: "Acima ou abaixo?",
+            tipo: "aplicar",
+            blocos: [
+              { type: "p", text: "Quem tende a cantar abaixo (“calando”) costuma estar com pouco ar ou cansado. Quem tende a cantar acima costuma estar com tensão ou ansiedade nas entradas." },
+              {
+                type: "compare",
+                prompt: "As duas tentam cantar Mi, mas nenhuma acertou. Qual ficou acima?",
+                options: [
+                  { label: "acima", notes: ["E4"], cents: 40 },
+                  { label: "abaixo", notes: ["E4"], cents: -40 },
+                ],
+                answer: 0,
+                explain: "Ouvir a direção do erro é o primeiro passo para corrigir. Anote se a sua tendência é ficar acima ou abaixo.",
+              },
+              {
+                type: "reveal",
+                prompt: "Fim de um ensaio longo, e o naipe começa a “calar”. Qual pode ser a causa?",
+                answer: "Cansaço e pouco ar costumam puxar a afinação para baixo. Uma pausa curta e respirações tranquilas ajudam mais do que cantar mais forte.",
+              },
+            ],
+          },
+          {
+            titulo: "Juntando tudo",
+            tipo: "checar",
+            blocos: [
+              {
+                type: "order",
+                prompt: "Coloque na ordem os passos para encontrar uma nota.",
+                items: ["Ouvir a referência", "Imaginar o som em silêncio", "Cantar suave em “u”", "Ajustar devagar até o centro"],
+              },
+            ],
           },
         ],
-        demonstracao: [
-          { type: "audio", label: "Nota de referência Dó4", notes: ["C4"], tempo: 25 },
-          { type: "audio", label: "Mesma nota em duas oitavas (Dó3 e Dó4)", notes: ["C3", "C4"], tempo: 50 },
-          { type: "keyboard", from: "C3", to: "C5", highlight: ["C3", "C4", "C5"], label: "As notas Dó em três oitavas" },
-          { type: "toolLink", tool: "afinador", label: "Abrir o treinador de afinação com microfone" },
-        ],
-        exercicioGuiado: {
-          passos: [
-            "Toque a referência, ouça em silêncio por 2 segundos e cante “u” suave na mesma altura.",
-            "No treinador de afinação, sustente a nota e observe o ponteiro. Ajuste devagar até ficar no centro.",
-            "Cante de propósito um pouco acima e depois um pouco abaixo, e volte ao centro. Isso treina o controle.",
-            "Repita com três notas diferentes dentro da sua região confortável.",
-            "Faça o exercício de percepção: ouça se a segunda nota está afinada, acima ou abaixo.",
-          ],
-        },
         pratiqueSozinho: {
           passos: ["Treinador de afinação: 5 notas sustentadas por dia.", "Laboratório: “perceber desafinação” por 3 minutos.", "Anote se a sua tendência é ficar acima ou abaixo."],
           minutos: 10,
@@ -672,39 +993,128 @@ export const trilhaA: PathDef = {
       content: {
         objetivo:
           "Cantar com texto inteligível, unificando as vogais com o grupo e articulando as consoantes no tempo certo, sem quebrar o legato.",
-        explicacao: [
+        gancho: "Na música sacra, a letra é a mensagem. Se a congregação não entende as palavras, parte do propósito se perde. Vamos deixar cada palavra clara.",
+        etapas: [
           {
-            type: "p",
-            text: "Na música sacra, o texto é a mensagem. Se a congregação não entende as palavras, perdemos parte do propósito. Cantando, sustentamos as vogais — é nelas que está o som — e as consoantes aparecem rápidas e precisas, como “molduras” das vogais.",
-          },
-          {
-            type: "list",
-            items: [
-              "Vogais: sustente a vogal pura. Em “Deus”, cante “Dê-us”, mantendo o “ê” e colocando o “u” só no final.",
-              "Ditongos: a segunda vogal entra no último instante (“mãe” = “mã-e”, com o “e” bem no fim).",
-              "Consoantes finais: no grupo, todos devem soltar o “s” ou o “r” final juntos, exatamente no corte indicado pelo regente.",
-              "Consoantes iniciais: ataque-as um pouco antes do tempo para que a vogal caia no tempo.",
-              "Em português cantado, evite o “r” muito arrastado ou gutural; prefira o “r” vibrante simples ou suave, conforme a orientação do grupo.",
+            titulo: "Vogal é som, consoante é moldura",
+            tipo: "descobrir",
+            blocos: [
+              { type: "p", text: "Cantando, sustentamos as vogais: é nelas que está o som. As consoantes aparecem rápidas e precisas, como molduras das vogais." },
+              {
+                type: "callout",
+                icon: "olho",
+                title: "Quadro e moldura",
+                text: "A vogal é o quadro; a consoante, a moldura. A moldura precisa estar lá, nítida, mas ninguém vai ao museu para ver só a moldura.",
+              },
+              {
+                type: "check",
+                question: "Numa nota longa na palavra “Deus”, o que você sustenta?",
+                options: ["O “ê”, colocando o “u” só no final", "O “s” final", "O “D” inicial", "O “u”"],
+                answer: 0,
+                explain: "Cante “Dê-us”: sustente o “ê” e coloque o “u” e o “s” só no último instante.",
+              },
             ],
           },
           {
-            type: "tip",
-            title: "Unidade de vogais",
-            text: "Num naipe, cinco pessoas cantando “é” de cinco jeitos soam como cinco vozes separadas. Combinem a forma da boca: lábios levemente arredondados ajudam a unificar o som.",
+            titulo: "Cinco vogais, uma nota",
+            tipo: "experimentar",
+            blocos: [
+              { type: "illustration", name: "vogais", caption: "Muda a vogal; a mandíbula quase não se mexe." },
+              { type: "audio", label: "Nota para exercitar vogais (mi-mê-má-mô-mu)", notes: ["D4", "D4", "D4", "D4", "D4"], tempo: 80 },
+              {
+                type: "timer",
+                instruction: "Fale e depois cante numa nota só: “mi – mê – má – mô – mu”. Mude apenas a vogal, sem mexer a mandíbula de forma exagerada.",
+                seconds: 30,
+              },
+            ],
+          },
+          {
+            titulo: "Ditongos sem pressa",
+            tipo: "descobrir",
+            blocos: [
+              { type: "p", text: "Nos ditongos, a segunda vogal entra só no último instante: “mãe” vira “mããã-e”, com o “e” bem no fim." },
+              {
+                type: "trueFalse",
+                items: [
+                  { statement: "Em “mãe”, sustento o “ã” e coloco o “e” no final.", answer: true, explain: "A primeira vogal carrega a nota; a segunda só fecha a palavra." },
+                  { statement: "Sustentar consoantes deixa a palavra mais clara (“Deusssss”).", answer: false, explain: "Consoante sustentada vira ruído. Sustente a vogal; a consoante é rápida." },
+                  { statement: "Para articular bem, preciso fechar bastante a boca.", answer: false, explain: "A articulação vem de lábios e língua ágeis, não da mandíbula travada." },
+                ],
+              },
+            ],
+          },
+          {
+            titulo: "Consoantes no tempo certo",
+            tipo: "descobrir",
+            blocos: [
+              { type: "p", text: "Consoantes iniciais: articule um pouco antes do tempo, para a vogal cair no tempo. Consoantes finais: no grupo, todos soltam o “s” ou o “r” juntos, no corte indicado pelo regente." },
+              {
+                type: "check",
+                question: "Para a vogal cair exatamente no tempo, quando entra a consoante inicial?",
+                options: ["Um pouco antes do tempo", "Exatamente no tempo", "Depois do tempo"],
+                answer: 0,
+                explain: "A consoante gasta um instante. Começando um pouco antes, a vogal, que carrega o som, cai certinha no tempo.",
+              },
+              { type: "tip", title: "E o “r”?", text: "Em português cantado, evite o “r” muito arrastado ou gutural. Prefira o “r” vibrante simples ou suave, conforme a orientação do grupo." },
+            ],
+          },
+          {
+            titulo: "Trava-línguas no ritmo",
+            tipo: "experimentar",
+            blocos: [
+              { type: "rhythm", pattern: "e e e e e e e e", bpm: 80, label: "Ritmo para trava-línguas em colcheias" },
+              { type: "timer", instruction: "No ritmo das colcheias: “Três pratos de trigo para três tigres tristes”. Sem tropeçar e sem pressa.", seconds: 30 },
+              { type: "toolLink", tool: "metronomo", label: "Abrir o metrônomo para treinar trava-línguas" },
+            ],
+          },
+          {
+            titulo: "“Senhor” sem arrastar",
+            tipo: "experimentar",
+            blocos: [
+              { type: "p", text: "Sustente “Se-” e “-nhô” e solte o “r” somente no final, no corte." },
+              { type: "singAlong", instruction: "Cante “Se-nhôôô” nesta nota e solte o “r” só no último instante.", note: "D4", seconds: 4 },
+              {
+                type: "reveal",
+                prompt: "Cinco pessoas soltam o “s” de “Deus”, cada uma num momento. Como isso soa para a congregação?",
+                answer: "Como um chiado espalhado: “Deus-s-s-s-s”. Combinem o corte com o regente e soltem juntos, sem exagero.",
+              },
+            ],
+          },
+          {
+            titulo: "Um naipe, uma vogal",
+            tipo: "aplicar",
+            blocos: [
+              {
+                type: "callout",
+                icon: "ouvido",
+                title: "Unidade de vogais",
+                text: "Cinco pessoas cantando “é” de cinco jeitos soam como cinco vozes separadas. Combinem a forma da boca: lábios levemente arredondados ajudam a unificar o som.",
+              },
+              {
+                type: "checklist",
+                title: "Teste com um hino",
+                items: ["Li a estrofe em voz alta, com calma", "Cantei com a mesma clareza da leitura", "Sustentei as vogais, não as consoantes", "Soltei as consoantes finais no tempo"],
+              },
+              { type: "toolLink", tool: "gravador", label: "Grave a estrofe: o texto está compreensível?" },
+            ],
+          },
+          {
+            titulo: "Juntando tudo",
+            tipo: "checar",
+            blocos: [
+              {
+                type: "match",
+                prompt: "Ligue cada elemento à forma de cantá-lo.",
+                pairs: [
+                  { left: "Vogal", right: "Sustentada: carrega o som" },
+                  { left: "Consoante inicial", right: "Um pouco antes do tempo" },
+                  { left: "Consoante final", right: "Todos juntos, no corte" },
+                  { left: "Ditongo", right: "Segunda vogal só no fim" },
+                ],
+              },
+            ],
           },
         ],
-        demonstracao: [
-          { type: "audio", label: "Nota para exercitar vogais (mi-mê-má-mô-mu)", notes: ["D4", "D4", "D4", "D4", "D4"], tempo: 80 },
-          { type: "rhythm", pattern: "e e e e e e e e", bpm: 80, label: "Ritmo para trava-línguas em colcheias" },
-        ],
-        exercicioGuiado: {
-          passos: [
-            "Fale e depois cante numa nota só: “mi – mê – má – mô – mu”, mudando apenas a vogal, sem mexer a mandíbula de forma exagerada.",
-            "Trava-línguas no ritmo de colcheias: “Três pratos de trigo para três tigres tristes”.",
-            "Cante a palavra “Senhor” em duas notas: sustente “Se-” e “-nhô” e solte o “r” somente no final.",
-            "Leia em voz alta a primeira estrofe de um hino, com calma, articulando bem. Depois cante mantendo a mesma clareza.",
-          ],
-        },
         pratiqueSozinho: {
           passos: ["2 minutos de trava-línguas com metrônomo.", "Cante uma estrofe sustentando as vogais e cortando as consoantes finais no tempo.", "Grave e confira se o texto está compreensível."],
           minutos: 6,
@@ -757,44 +1167,120 @@ export const trilhaA: PathDef = {
       content: {
         objetivo:
           "Diferenciar extensão e tessitura, conhecer os registros vocais e identificar a própria região confortável sem forçar notas extremas.",
-        explicacao: [
+        gancho: "Sua voz é de soprano, contralto, tenor ou baixo? Antes de responder, vamos descobrir onde ela canta feliz, sem esforço.",
+        etapas: [
           {
-            type: "p",
-            text: "Extensão vocal é o conjunto de todas as notas que uma pessoa consegue produzir, da mais grave à mais aguda — inclusive as que soam com esforço. Tessitura é a região em que a voz canta com conforto, boa qualidade e por bastante tempo. Para escolher a voz num arranjo, a tessitura é muito mais importante que a extensão.",
-          },
-          {
-            type: "list",
-            items: [
-              "Voz de peito: sensação de vibração no peito, som mais denso, usada nas regiões grave e média.",
-              "Voz de cabeça: sensação de vibração no rosto e na cabeça, som mais leve, usada na região aguda.",
-              "Coordenação intermediária (voz mista): equilíbrio entre os dois, permitindo transições suaves.",
-              "Região de passagem: notas em que a voz muda de registro. Pode “quebrar” no início; com treino, a transição fica suave. A identificação precisa da passagem deve ser feita com um professor.",
+            titulo: "Extensão × tessitura",
+            tipo: "descobrir",
+            blocos: [
+              { type: "illustration", name: "extensao-tessitura", caption: "A tessitura fica dentro da extensão." },
+              { type: "p", text: "Extensão é tudo o que você consegue cantar, do mais grave ao mais agudo, inclusive com esforço. Tessitura é a região em que a voz canta com conforto, boa qualidade e por bastante tempo." },
+              {
+                type: "callout",
+                icon: "ideia",
+                title: "Pense numa casa",
+                text: "A extensão é a casa inteira, até o sótão apertado. A tessitura é a sala onde você mora e passa o dia.",
+              },
+              {
+                type: "check",
+                question: "Para escolher a sua parte num arranjo, o que conta mais?",
+                options: ["A tessitura, onde canto com conforto", "A nota mais aguda que alcanço", "A nota mais grave que alcanço"],
+                answer: 0,
+                explain: "Uma música inteira pede conforto do começo ao fim. As notas extremas fazem parte da extensão, não da tessitura.",
+              },
             ],
           },
           {
-            type: "tip",
-            title: "Sem competição",
-            text: "Ninguém canta melhor por alcançar a nota mais aguda ou mais grave. O que importa no ministério é cantar a sua parte com conforto e qualidade. Exercícios extremos podem machucar a voz.",
+            titulo: "Os registros da voz",
+            tipo: "descobrir",
+            blocos: [
+              { type: "illustration", name: "registros", caption: "Peito, mista e cabeça: a vibração muda de lugar." },
+              {
+                type: "match",
+                prompt: "Ligue cada registro à sua característica.",
+                pairs: [
+                  { left: "Voz de peito", right: "Vibra no peito, som mais denso, grave e médio" },
+                  { left: "Voz de cabeça", right: "Vibra no rosto e na cabeça, som mais leve, agudo" },
+                  { left: "Voz mista", right: "Equilíbrio entre os dois, transição suave" },
+                  { left: "Região de passagem", right: "Notas em que a voz muda de registro" },
+                ],
+              },
+            ],
           },
           {
-            type: "p",
-            text: "A classificação tradicional (soprano, mezzo-soprano, contralto, tenor, barítono, baixo) considera tessitura, timbre e passagens. Por isso, aqui ela sempre começa como provisória e pode mudar: vozes se desenvolvem com o estudo.",
+            titulo: "Sirene: sinta a mudança",
+            tipo: "experimentar",
+            blocos: [
+              { type: "p", text: "Faça a sirene em “u”, do grave ao agudo, bem suave. Observe onde a sensação de vibração muda do peito para a cabeça." },
+              { type: "timer", instruction: "Sirene suave em “u”: suba e desça devagar, sem empurrar.", seconds: 10, reps: 3 },
+              {
+                type: "reveal",
+                prompt: "Sua voz deu uma “quebrada” no meio da sirene?",
+                answer: "Normal! É a região de passagem entre registros. Com treino suave, a transição fica lisa. A identificação precisa da passagem deve ser feita com um professor.",
+              },
+            ],
+          },
+          {
+            titulo: "Atravesse a passagem",
+            tipo: "ouvir",
+            blocos: [
+              { type: "audio", label: "Deslize por arpejo (vozes femininas)", notes: ["C4", "E4", "G4", "C5", "G4", "E4", "C4"], tempo: 100 },
+              { type: "audio", label: "Deslize por arpejo (vozes masculinas)", notes: ["C3", "E3", "G3", "C4", "G3", "E3", "C3"], tempo: 100 },
+              { type: "p", text: "Cante o arpejo Dó–Mi–Sol–Dó em “u”, passando pela região de passagem com volume suave." },
+              {
+                type: "check",
+                question: "Subindo o arpejo, a voz começa a pesar. O que fazer?",
+                options: ["Deixar a voz ficar mais leve, sem empurrar", "Empurrar a voz de peito mais forte", "Erguer o queixo para alcançar"],
+                answer: 0,
+                explain: "Ao subir, a voz fica mais leve: a voz de cabeça e a voz mista existem para isso. Empurrar a voz de peito cansa e pode machucar.",
+              },
+            ],
+          },
+          {
+            titulo: "Mapeie a sua região",
+            tipo: "experimentar",
+            blocos: [
+              { type: "keyboard", from: "E2", to: "C6", highlight: ["C4"], label: "Teclado de referência (Dó4 = dó central)" },
+              { type: "p", text: "No mapeamento, cante cada nota proposta e marque: confortável, com esforço ou não alcanço." },
+              { type: "warning", text: "Pare de subir ou descer no primeiro sinal de esforço. As notas “com esforço” fazem parte da extensão, não da tessitura." },
+              { type: "toolLink", tool: "extensao", label: "Abrir o mapeamento da região confortável" },
+            ],
+          },
+          {
+            titulo: "Sem competição",
+            tipo: "aplicar",
+            blocos: [
+              {
+                type: "callout",
+                icon: "coracao",
+                title: "O que importa no ministério",
+                text: "Ninguém canta melhor por alcançar a nota mais aguda ou mais grave. O que importa é cantar a sua parte com conforto e qualidade. Exercícios extremos podem machucar a voz.",
+              },
+              {
+                type: "check",
+                question: "Ana alcança as notas do soprano, mas com esforço. No contralto, canta a música inteira com conforto. Onde ela deve cantar, por enquanto?",
+                options: ["No contralto, onde está a tessitura dela", "No soprano, já que alcança as notas", "Alternando, para treinar o agudo no culto"],
+                answer: 0,
+                explain: "A parte certa é a da região confortável durante a música inteira. Com o estudo, isso pode mudar.",
+              },
+            ],
+          },
+          {
+            titulo: "Juntando tudo",
+            tipo: "checar",
+            blocos: [
+              { type: "p", text: "Soprano, mezzo-soprano, contralto, tenor, barítono e baixo: a classificação considera tessitura, timbre e passagens. Aqui ela sempre começa provisória, porque vozes se desenvolvem com o estudo." },
+              {
+                type: "trueFalse",
+                items: [
+                  { statement: "Minha classificação vocal é definitiva desde o primeiro teste.", answer: false, explain: "Ela começa provisória e pode ser revista pelo professor." },
+                  { statement: "A voz “falhar” na passagem é um defeito.", answer: false, explain: "É uma transição natural, que se coordena com treino suave." },
+                  { statement: "Ao sentir esforço numa nota, devo parar e voltar à região confortável.", answer: true, explain: "Não procure as notas extremas. Pare no primeiro sinal de esforço." },
+                ],
+              },
+            ],
           },
         ],
-        demonstracao: [
-          { type: "keyboard", from: "E2", to: "C6", highlight: ["C4"], label: "Teclado de referência (Dó4 = dó central)" },
-          { type: "audio", label: "Deslize por arpejo (vozes femininas)", notes: ["C4", "E4", "G4", "C5", "G4", "E4", "C4"], tempo: 100 },
-          { type: "audio", label: "Deslize por arpejo (vozes masculinas)", notes: ["C3", "E3", "G3", "C4", "G3", "E3", "C3"], tempo: 100 },
-          { type: "toolLink", tool: "extensao", label: "Abrir o mapeamento da região confortável" },
-        ],
-        exercicioGuiado: {
-          passos: [
-            "Faça a sirene em “u” do grave ao agudo, bem suave, e observe onde a sensação de vibração muda do peito para a cabeça.",
-            "No mapeamento da região confortável, cante cada nota proposta e marque: confortável, com esforço ou não alcanço.",
-            "Pare de subir ou descer assim que sentir esforço. As notas “com esforço” fazem parte da extensão, não da tessitura.",
-            "Cante o arpejo Dó–Mi–Sol–Dó em “u”, passando pela região de passagem com volume suave.",
-          ],
-        },
         pratiqueSozinho: {
           passos: ["Sirene suave em “u” por 1 minuto.", "Arpejos leves atravessando a passagem em volume suave.", "Refaça o mapeamento da região a cada 4 semanas para ver a evolução."],
           minutos: 6,
@@ -839,40 +1325,134 @@ export const trilhaA: PathDef = {
       content: {
         objetivo:
           "Usar dinâmica, fraseado, legato e articulação para comunicar o sentido do texto, equilibrando emoção, técnica e inteligibilidade, em unidade com o grupo.",
-        explicacao: [
+        gancho: "A mesma melodia pode soar como uma oração íntima ou como um hino de vitória. A diferença está em como você canta. Vamos dar sentido às notas.",
+        etapas: [
           {
-            type: "p",
-            text: "Interpretar é dar sentido às notas. A mesma melodia pode soar como uma oração íntima ou como um hino de vitória, dependendo de como a cantamos. O ponto de partida é sempre o texto: o que ele diz, para quem, com que sentimento.",
-          },
-          {
-            type: "list",
-            items: [
-              "Dinâmica: variações de intensidade. pp (pianíssimo), p (piano, suave), mp, mf, f (forte), ff. Crescendo (aumentar aos poucos) e decrescendo (diminuir).",
-              "Fraseado: cada frase tem uma direção, normalmente para uma palavra ou sílaba importante. Evite acentuar sílabas fracas.",
-              "Legato: notas ligadas, sem buracos entre elas. É o padrão do canto coral sacro.",
-              "Staccato e acentos: articulações curtas ou marcadas, usadas para efeito de texto.",
-              "Intenção: o rosto e a expressão também comunicam. Cante o texto, não apenas as notas.",
+            titulo: "Comece pelo texto",
+            tipo: "descobrir",
+            blocos: [
+              { type: "p", text: "Interpretar é dar sentido às notas. O ponto de partida é sempre o texto: o que ele diz, para quem e com que sentimento." },
+              {
+                type: "callout",
+                icon: "coracao",
+                title: "Cante o texto, não só as notas",
+                text: "O rosto e a expressão também comunicam. Quem ouve percebe quando você canta com intenção.",
+              },
+              {
+                type: "check",
+                question: "Qual é o ponto de partida para interpretar um hino?",
+                options: ["O sentido do texto", "O volume máximo da voz", "A nota mais aguda", "O andamento mais rápido possível"],
+                answer: 0,
+                explain: "Dinâmica, fraseado e articulação servem ao texto. Primeiro entenda o que se diz; depois decida como cantar.",
+              },
             ],
           },
           {
-            type: "tip",
-            title: "Unidade sonora",
-            text: "No grupo, a interpretação é combinada: todos crescem juntos, respiram juntos e cortam juntos. Emoção individual sem unidade vira desequilíbrio; técnica sem emoção vira execução fria. O regente conduz esse equilíbrio.",
+            titulo: "O volume conta uma história",
+            tipo: "descobrir",
+            blocos: [
+              { type: "illustration", name: "dinamica", caption: "Do pp ao ff, com crescendo e decrescendo." },
+              {
+                type: "list",
+                items: ["Dinâmica: variações de intensidade, do pp (pianíssimo) e p (piano, suave) ao f (forte) e ff.", "Crescendo: aumentar aos poucos. Decrescendo: diminuir aos poucos."],
+              },
+              { type: "order", prompt: "Ordene do mais suave para o mais forte.", items: ["pp", "p", "mp", "mf", "f", "ff"] },
+            ],
+          },
+          {
+            titulo: "Notas de mãos dadas",
+            tipo: "ouvir",
+            blocos: [
+              { type: "p", text: "Legato é cantar as notas ligadas, sem buracos entre elas. É o padrão do canto coral sacro. Staccato e acentos são articulações curtas ou marcadas, usadas para efeito de texto." },
+              { type: "audio", label: "Frase em legato (Sol–Lá–Si–Dó–Si–Lá–Sol)", notes: ["G4", "A4", "B4", "C5", "B4", "A4", "G4"], tempo: 72 },
+              {
+                type: "check",
+                question: "Qual descrição combina com o legato?",
+                options: ["Notas ligadas, sem interrupções", "Notas curtas e separadas", "Notas sempre acentuadas"],
+                answer: 0,
+                explain: "No legato, o som passa de uma nota à outra como um fio contínuo. Notas curtas e separadas são o staccato.",
+              },
+            ],
+          },
+          {
+            titulo: "Dê direção à frase",
+            tipo: "experimentar",
+            blocos: [
+              { type: "p", text: "Cante a frase anterior em “lu”, em legato (vozes graves, uma oitava abaixo). Depois cresça até a nota mais aguda, o Dó, e diminua até o fim." },
+              { type: "timer", instruction: "Primeira vez: só legato. Segunda: com crescendo até o Dó e decrescendo até o fim.", seconds: 15, reps: 2 },
+              { type: "tip", title: "Emoção não é volume", text: "Momentos suaves também emocionam. Planeje pelo menos um crescendo e um momento suave em cada estrofe." },
+            ],
+          },
+          {
+            titulo: "Para onde vai a frase?",
+            tipo: "descobrir",
+            blocos: [
+              { type: "p", text: "Cada frase tem uma direção, normalmente para uma palavra ou sílaba importante. Evite acentuar sílabas fracas: respeite a acentuação natural da fala." },
+              {
+                type: "check",
+                question: "Na palavra “glória”, qual sílaba recebe o acento natural?",
+                options: ["GLÓ", "ri", "a"],
+                answer: 0,
+                explain: "Na fala dizemos “GLÓ-ri-a”. Cantando, mantenha esse acento e não empurre as sílabas fracas do fim.",
+              },
+              {
+                type: "reveal",
+                prompt: "Leia: “Grande é o Senhor e mui digno de louvor”. Para qual palavra você dirigiria a frase?",
+                answer: "Não há uma única resposta: muitos escolheriam “grande” ou “digno”. O importante é decidir, combinar com o grupo e conduzir a frase até ela.",
+              },
+            ],
+          },
+          {
+            titulo: "Unidade sonora",
+            tipo: "aplicar",
+            blocos: [
+              {
+                type: "callout",
+                icon: "ouvido",
+                title: "Todos juntos",
+                text: "No grupo, todos crescem, respiram e cortam juntos. Emoção individual sem unidade vira desequilíbrio; técnica sem emoção vira execução fria. O regente conduz esse equilíbrio.",
+              },
+              {
+                type: "trueFalse",
+                items: [
+                  { statement: "Quem sente mais a música deve cantar mais forte que o grupo.", answer: false, explain: "Emoção individual sem unidade vira desequilíbrio. A interpretação é combinada." },
+                  { statement: "Cantar tudo no mesmo volume deixa a música mais bonita.", answer: false, explain: "Sem variação de dinâmica a música fica plana. Planeje crescendos e momentos suaves." },
+                  { statement: "Momentos suaves também podem emocionar.", answer: true, explain: "Emoção não depende de volume. Um pianíssimo bem cantado toca muito." },
+                ],
+              },
+            ],
+          },
+          {
+            titulo: "Sua vez: prepare uma estrofe",
+            tipo: "aplicar",
+            blocos: [
+              {
+                type: "checklist",
+                title: "Passo a passo",
+                items: ["Sublinhei a palavra mais importante de cada frase", "Marquei respirações e dinâmicas na letra", "Cantei dirigindo cada frase para a palavra sublinhada", "Gravei e ouvi: a interpretação combina com o texto?"],
+              },
+              { type: "harmonyLink", arrangement: "hino-alegria-unissono", label: "Pratique dinâmica no “Hino da Alegria” em uníssono" },
+              { type: "toolLink", tool: "gravador", label: "Gravar a estrofe" },
+            ],
+          },
+          {
+            titulo: "Juntando tudo",
+            tipo: "checar",
+            blocos: [
+              {
+                type: "match",
+                prompt: "Ligue cada termo ao seu significado.",
+                pairs: [
+                  { left: "p", right: "Piano: suave" },
+                  { left: "f", right: "Forte" },
+                  { left: "Crescendo", right: "Aumentar aos poucos" },
+                  { left: "Legato", right: "Notas ligadas" },
+                  { left: "Staccato", right: "Notas curtas" },
+                ],
+              },
+            ],
           },
         ],
-        demonstracao: [
-          { type: "audio", label: "Frase em legato (Sol–Lá–Si–Dó–Si–Lá–Sol)", notes: ["G4", "A4", "B4", "C5", "B4", "A4", "G4"], tempo: 72 },
-          { type: "harmonyLink", arrangement: "hino-alegria-unissono", label: "Pratique dinâmica no “Hino da Alegria” em uníssono" },
-        ],
-        exercicioGuiado: {
-          passos: [
-            "Leia o texto de uma estrofe em voz alta e sublinhe a palavra mais importante de cada frase.",
-            "Cante a frase de demonstração em “lu” com legato, sem buracos entre as notas.",
-            "Cante a mesma frase com crescendo até a nota mais aguda e decrescendo até o fim.",
-            "Cante a estrofe escolhida dirigindo cada frase para a palavra sublinhada.",
-            "Grave e ouça: a interpretação combina com o texto?",
-          ],
-        },
         pratiqueSozinho: {
           passos: ["Escolha uma música do repertório e marque dinâmicas e respirações na letra.", "Cante em três versões: sem dinâmica, com a dinâmica marcada e com exagero. Compare.", "Leve as marcações para discutir no ensaio."],
           minutos: 10,

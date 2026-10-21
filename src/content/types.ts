@@ -89,7 +89,11 @@ export type Block =
   | {
       type: "compare";
       prompt: string;
-      options: { label: string; notes: NoteSpec; cents?: number; tempo?: number; mode?: "seq" | "chord" }[];
+      /**
+       * `cents` desafina a opção inteira; `voiceCents` desafina cada voz de um
+       * acorde (posição dentro do grupo), ex.: [0, 0, -30] = só a voz de cima abaixo.
+       */
+      options: { label: string; notes: NoteSpec; cents?: number; voiceCents?: number[]; tempo?: number; mode?: "seq" | "chord" }[];
       answer?: number;
       explain: string;
     }

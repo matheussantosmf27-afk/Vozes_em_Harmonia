@@ -42,8 +42,10 @@ function Feedback({ ok, children }: { ok: boolean; children: React.ReactNode }) 
   );
 }
 
-function events(notes: NoteSpec, mode: "seq" | "chord" = "seq", tempo = 80, cents = 0): NoteEvent[] {
-  return audioSpecToEvents({ notes, mode, tempo }).map((e) => ({ ...e, cents: (e.cents ?? 0) + cents }));
+function events(notes: NoteSpec, mode: "seq" | "chord" = "seq", tempo = 80, cents = 0, voiceCents?: number[]): NoteEvent[] {
+  // posição de cada evento dentro do seu grupo (acorde), na mesma ordem de audioSpecToEvents
+  const voice = mode === "chord" ? notes.flat().map((_, k) => k) : notes.flatMap((n) => (Array.isArray(n) ? n.map((_, k) => k) : [0]));
+  return audioSpecToEvents({ notes, mode, tempo }).map((e, k) => ({ ...e, cents: (e.cents ?? 0) + cents + (voiceCents?.[voice[k]] ?? 0) }));
 }
 
 // ---------------------------------------------------------------------------
@@ -188,7 +190,7 @@ export function Compare({
   explain,
 }: {
   prompt: string;
-  options: { label: string; notes: NoteSpec; cents?: number; tempo?: number; mode?: "seq" | "chord" }[];
+  options: { label: string; notes: NoteSpec; cents?: number; voiceCents?: number[]; tempo?: number; mode?: "seq" | "chord" }[];
   answer?: number;
   explain: string;
 }) {
@@ -207,7 +209,7 @@ export function Compare({
           <div key={i} className={cn("space-y-2 rounded-xl border p-3", picked === i && (i === answer ? "border-success bg-success/10" : "border-destructive bg-destructive/10"))}>
             <p className="text-sm font-semibold">{revealed ? `${letters[i]} · ${o.label}` : `Opção ${letters[i]}`}</p>
             <div className="flex flex-wrap gap-2">
-              <PlayButton events={events(o.notes, o.mode, o.tempo, o.cents ?? 0)} label="Ouvir" size="sm" />
+              <PlayButton events={events(o.notes, o.mode, o.tempo, o.cents ?? 0, o.voiceCents)} label="Ouvir" size="sm" />
               {challenge && (
                 <Button size="sm" variant="outline" disabled={revealed} onClick={() => setPicked(i)}>
                   É esta
