@@ -21,53 +21,122 @@ export const trilhaA: PathDef = {
       content: {
         objetivo:
           "Encontrar uma postura alinhada e relaxada, de pé e sentado, que favoreça a respiração e a emissão, e reconhecer as tensões mais comuns ao cantar.",
-        explicacao: [
+        gancho: "Antes da primeira nota, quem canta é o corpo. Vamos descobrir como deixá-lo pronto, sem esforço e sem rigidez.",
+        etapas: [
           {
-            type: "p",
-            text: "A voz não acontece só na garganta: ela depende do corpo inteiro. Quando o corpo está alinhado, os músculos da respiração trabalham com liberdade e a laringe não precisa compensar. Quando há tensão (ombros erguidos, queixo para frente, joelhos travados), o som fica mais apertado e cansamos mais rápido.",
-          },
-          {
-            type: "list",
-            items: [
-              "Pés afastados na largura do quadril, peso distribuído entre calcanhares e dedos.",
-              "Joelhos destravados (nem dobrados, nem esticados ao extremo).",
-              "Quadril em posição neutra, sem empinar nem encaixar demais.",
-              "Coluna longa e peito aberto, sem estufar ou arquear as costas.",
-              "Ombros soltos, para baixo e levemente para trás.",
-              "Cabeça equilibrada sobre a coluna, queixo paralelo ao chão.",
-              "Mandíbula solta, língua relaxada encostando nos dentes de baixo.",
+            titulo: "Sua voz usa o corpo inteiro",
+            tipo: "descobrir",
+            blocos: [
+              { type: "p", text: "O som nasce na garganta, mas quem sustenta a voz é o corpo todo: pés, coluna, ombros e mandíbula." },
+              {
+                type: "callout",
+                icon: "musica",
+                title: "Pense num violão",
+                text: "As cordas fazem o som, mas é a caixa de madeira que o deixa bonito. Seu corpo é a caixa da sua voz: se estiver torto ou travado, o som sai apertado.",
+              },
+              {
+                type: "check",
+                question: "Se os ombros sobem e o pescoço trava ao cantar, o que tende a acontecer com o som?",
+                options: ["Fica mais apertado e cansa mais rápido", "Fica mais forte e bonito", "Não muda nada"],
+                answer: 0,
+                explain: "Tensão no corpo vira tensão no som. Por isso a postura vem antes de qualquer nota.",
+              },
             ],
           },
           {
-            type: "tip",
-            title: "Postura não é rigidez",
-            text: "Pense em “alto e solto”: imagine um fio puxando suavemente o topo da cabeça para cima, enquanto ombros e braços pesam para baixo. Se você precisa fazer força para manter a postura, ela está rígida demais.",
+            titulo: "Alto e solto",
+            tipo: "descobrir",
+            blocos: [
+              { type: "illustration", name: "postura-comparada", caption: "Orelha, ombro, quadril e tornozelo na mesma linha." },
+              {
+                type: "callout",
+                icon: "ideia",
+                title: "A imagem do fio",
+                text: "Imagine um fio puxando o topo da cabeça para cima, enquanto ombros e braços pesam para baixo. Alto e solto ao mesmo tempo.",
+              },
+              {
+                type: "trueFalse",
+                items: [
+                  { statement: "Boa postura é ficar duro, como um soldado.", answer: false, explain: "Postura não é rigidez. Se precisa de força para mantê-la, está rígida demais." },
+                  { statement: "Para notas agudas, devo erguer o queixo.", answer: false, explain: "Erguer o queixo estica o pescoço e aperta a laringe. O queixo fica paralelo ao chão." },
+                  { statement: "Joelhos destravados evitam tensão nas costas.", answer: true, explain: "Joelhos travados endurecem o corpo e podem até causar tontura em pé." },
+                ],
+              },
+            ],
           },
           {
-            type: "p",
-            text: "Sentado(a), use a parte da frente da cadeira, com os dois pés apoiados no chão e a coluna sem encostar no encosto. Assim o abdômen fica livre para a respiração — o que é importante nos ensaios longos.",
+            titulo: "Encontre o seu centro",
+            tipo: "experimentar",
+            blocos: [
+              { type: "p", text: "Fique de pé, de preferência na frente de um espelho, e siga o cronômetro." },
+              { type: "timer", instruction: "Feche os olhos e balance devagar para frente e para trás até sentir o peso dividido entre calcanhares e dedos.", seconds: 20 },
+              {
+                type: "checklist",
+                title: "Confira no espelho",
+                items: ["Pés na largura do quadril", "Joelhos destravados", "Ombros soltos, longe das orelhas", "Queixo paralelo ao chão", "Peito aberto, barriga livre"],
+              },
+            ],
           },
-        ],
-        demonstracao: [
           {
-            type: "p",
-            text: "Use as notas abaixo para fazer o “hum” de boca fechada. Escolha a que soar mais próxima da sua fala: o objetivo é sentir vibração nos lábios e no rosto, sem esforço.",
+            titulo: "Solte ombros e mandíbula",
+            tipo: "experimentar",
+            blocos: [
+              { type: "timer", instruction: "Suba os ombros até as orelhas ao inspirar e deixe-os cair de uma vez ao soltar o ar. Repita.", seconds: 6, reps: 3 },
+              { type: "illustration", name: "mandibula", caption: "A mandíbula cai por gravidade, sem empurrar." },
+              { type: "timer", instruction: "Com as pontas dos dedos, massageie as bochechas perto da articulação da mandíbula, com a boca entreaberta.", seconds: 20 },
+              {
+                type: "reveal",
+                prompt: "Coloque a mão nos ombros e inspire fundo. Eles subiram?",
+                answer: "Se subiram, o ar foi para cima do peito. Tente de novo pensando em encher a cintura e as costelas: os ombros ficam parados.",
+              },
+            ],
           },
-          { type: "audio", label: "Nota para “hum” — vozes femininas (Lá3)", notes: ["A3"], tempo: 30 },
-          { type: "audio", label: "Nota para “hum” — vozes masculinas (Lá2)", notes: ["A2"], tempo: 30 },
-          { type: "toolLink", tool: "gravador", label: "Grave-se cantando uma frase curta em postura “largada” e depois alinhada, e compare" },
+          {
+            titulo: "O “hum” que vibra",
+            tipo: "ouvir",
+            blocos: [
+              { type: "p", text: "Agora una corpo e som. Com a boca fechada e os dentes separados por dentro, faça um “hum” confortável." },
+              { type: "singAlong", instruction: "Ouça a nota e faça “hum” sustentando por 3 segundos. Sinta os lábios fazendo cócegas.", note: "A3", seconds: 3 },
+              {
+                type: "callout",
+                icon: "maos",
+                title: "Teste do toque",
+                text: "Encoste os dedos nos lábios enquanto faz o “hum”. Sentiu vibrar? É sinal de som livre, sem apertar a garganta.",
+              },
+            ],
+          },
+          {
+            titulo: "E sentado, como fica?",
+            tipo: "aplicar",
+            blocos: [
+              { type: "illustration", name: "postura-sentada" },
+              {
+                type: "check",
+                question: "No ensaio sentado, qual é a melhor posição?",
+                options: ["Na frente da cadeira, pés no chão, costas sem encostar", "Recostado(a), pernas cruzadas", "Inclinado(a) para frente, apoiado nos joelhos"],
+                answer: 0,
+                explain: "Na frente da cadeira o abdômen fica livre para a respiração, e você mantém o mesmo alinhamento de quando está de pé.",
+              },
+              { type: "toolLink", tool: "gravador", label: "Desafio: grave uma frase “largado(a)” e outra alinhado(a). Ouça a diferença." },
+            ],
+          },
+          {
+            titulo: "Juntando tudo",
+            tipo: "checar",
+            blocos: [
+              {
+                type: "match",
+                prompt: "Ligue cada tensão à sua correção.",
+                pairs: [
+                  { left: "Ombros sobem ao inspirar", right: "Encher cintura e costelas" },
+                  { left: "Queixo para cima no agudo", right: "Queixo paralelo ao chão" },
+                  { left: "Joelhos travados", right: "Joelhos destravados" },
+                  { left: "Dentes apertados", right: "Mandíbula solta" },
+                ],
+              },
+            ],
+          },
         ],
-        exercicioGuiado: {
-          intro: "Faça devagar, prestando atenção às sensações. Leva cerca de 5 minutos.",
-          passos: [
-            "De pé, feche os olhos e perceba o peso do corpo nos pés. Balance levemente para frente e para trás até encontrar o centro.",
-            "Destrave os joelhos e imagine o fio no topo da cabeça alongando a coluna.",
-            "Eleve os ombros até as orelhas ao inspirar e deixe-os cair ao expirar. Repita 3 vezes; depois role os ombros para trás 5 vezes.",
-            "Com as pontas dos dedos, massageie a musculatura da bochecha perto da articulação da mandíbula, deixando a boca entreaberta.",
-            "Com a boca fechada e a mandíbula solta por dentro, faça um “hum” na nota de referência por 5 segundos. Sinta a vibração nos lábios.",
-            "Sente-se na frente da cadeira e repita o “hum”, mantendo o mesmo alinhamento.",
-          ],
-        },
         pratiqueSozinho: {
           passos: [
             "Antes de cada estudo ou ensaio, faça o checklist de postura (1 minuto).",

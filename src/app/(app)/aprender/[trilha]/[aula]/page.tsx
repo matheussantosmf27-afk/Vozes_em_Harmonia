@@ -1,11 +1,13 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import { AlertTriangle, ArrowLeft, ArrowRight, CheckCircle2, ClipboardCheck, Clock, Flag, HeartPulse, ListChecks, Repeat, Target } from "lucide-react";
+import { AlertTriangle, ArrowLeft, ArrowRight, CalendarCheck, CheckCircle2, ClipboardCheck, Clock, Dumbbell, Flag, HeartPulse, ListChecks, Repeat, Target } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import { buttonVariants } from "@/components/ui/button";
 import { Blocks } from "@/components/lesson/blocks";
 import { LessonStarter } from "@/components/lesson/lesson-starter";
+import { LessonPlayer } from "@/components/lesson/lesson-player";
+import { Checklist, FlipCards } from "@/components/lesson/interactive-blocks";
 import { ExerciseRunner } from "@/components/exercises/exercise-runner";
 import { requireUser } from "@/lib/auth";
 import { createClient } from "@/lib/supabase/server";
@@ -93,22 +95,43 @@ export default async function AulaPage({ params }: PageProps<"/aprender/[trilha]
         </div>
       </header>
 
+      {content.etapas?.length ? (
+        <>
+          <div className="space-y-3 rounded-2xl border-l-4 border-gold bg-card p-4 sm:p-5">
+            {content.gancho && <p className="text-lg font-medium leading-relaxed">{content.gancho}</p>}
+            <p className="flex gap-2 text-sm leading-relaxed text-muted-foreground">
+              <Target className="mt-0.5 size-4 shrink-0 text-gold" aria-hidden />
+              <span>
+                <strong className="text-foreground">Ao final desta aula:</strong> {content.objetivo}
+              </span>
+            </p>
+          </div>
+          <LessonPlayer
+            lessonKey={lesson.slug}
+            steps={content.etapas.map((e) => ({ titulo: e.titulo, tipo: e.tipo }))}
+            panels={content.etapas.map((e, k) => (
+              <Blocks key={k} blocks={e.blocos} />
+            ))}
+          />
+        </>
+      ) : (
+        <>
       <Section icon={Target} title="Objetivo">
         <p className="rounded-xl border-l-4 border-gold bg-card p-4 leading-relaxed">{content.objetivo}</p>
       </Section>
 
       <Section icon={ListChecks} title="Explicação">
-        <Blocks blocks={content.explicacao} />
+        <Blocks blocks={content.explicacao ?? []} />
       </Section>
 
       <Section icon={Repeat} title="Demonstração">
-        <Blocks blocks={content.demonstracao} />
+        <Blocks blocks={content.demonstracao ?? []} />
       </Section>
 
       <Section icon={ClipboardCheck} title="Exercício guiado">
-        {content.exercicioGuiado.intro && <p className="text-muted-foreground">{content.exercicioGuiado.intro}</p>}
+        {content.exercicioGuiado?.intro && <p className="text-muted-foreground">{content.exercicioGuiado.intro}</p>}
         <ol className="space-y-2">
-          {content.exercicioGuiado.passos.map((p, i) => (
+          {(content.exercicioGuiado?.passos ?? []).map((p, i) => (
             <li key={p} className="flex gap-3 rounded-xl border bg-card p-3">
               <span className="flex size-7 shrink-0 items-center justify-center rounded-full bg-primary text-sm font-semibold text-primary-foreground">{i + 1}</span>
               <span className="leading-relaxed">{p}</span>
@@ -129,28 +152,56 @@ export default async function AulaPage({ params }: PageProps<"/aprender/[trilha]
         )}
       </Section>
 
-      <Section icon={Repeat} title="Para praticar sozinho(a)">
-        <div className="rounded-xl border bg-card p-4">
-          <p className="mb-2 text-sm text-muted-foreground">
-            {content.pratiqueSozinho.minutos} minutos · {content.pratiqueSozinho.frequencia}
-          </p>
-          <ul className="list-disc space-y-1.5 pl-6">
-            {content.pratiqueSozinho.passos.map((p) => (
-              <li key={p}>{p}</li>
+        </>
+      )}
+
+      {content.etapas?.length && practices.length > 0 ? (
+        <Section icon={Dumbbell} title="Hora de praticar" className="scroll-mt-24">
+          <div id="praticar" className="scroll-mt-24 space-y-4">
+            {practices.map((e) => (
+              <ExerciseRunner
+                key={e.id}
+                exercise={{ id: e.id, slug: e.slug, title: e.title, instructions: e.instructions, type: e.type as ExerciseType, config: e.config, purpose: e.purpose }}
+                voiceRange={voiceRange}
+                revalidate={here}
+              />
             ))}
-          </ul>
-        </div>
-      </Section>
+          </div>
+        </Section>
+      ) : (
+        content.etapas?.length ? <span id="praticar" /> : null
+      )}
 
       <Section icon={AlertTriangle} title="Erros comuns">
-        <div className="grid gap-3 sm:grid-cols-2">
-          {content.errosComuns.map((e) => (
-            <div key={e.erro} className="space-y-1 rounded-xl border bg-card p-4">
-              <p className="font-medium">{e.erro}</p>
-              <p className="text-sm text-muted-foreground">{e.correcao}</p>
-            </div>
-          ))}
-        </div>
+        {content.etapas?.length ? (
+          <FlipCards items={content.errosComuns} />
+        ) : (
+          <div className="grid gap-3 sm:grid-cols-2">
+            {content.errosComuns.map((e) => (
+              <div key={e.erro} className="space-y-1 rounded-xl border bg-card p-4">
+                <p className="font-medium">{e.erro}</p>
+                <p className="text-sm text-muted-foreground">{e.correcao}</p>
+              </div>
+            ))}
+          </div>
+        )}
+      </Section>
+
+      <Section icon={content.etapas?.length ? CalendarCheck : Repeat} title={content.etapas?.length ? "Sua prática da semana" : "Para praticar sozinho(a)"}>
+        {content.etapas?.length ? (
+          <Checklist title={`${content.pratiqueSozinho.minutos} minutos · ${content.pratiqueSozinho.frequencia}`} items={content.pratiqueSozinho.passos} />
+        ) : (
+          <div className="rounded-xl border bg-card p-4">
+            <p className="mb-2 text-sm text-muted-foreground">
+              {content.pratiqueSozinho.minutos} minutos · {content.pratiqueSozinho.frequencia}
+            </p>
+            <ul className="list-disc space-y-1.5 pl-6">
+              {content.pratiqueSozinho.passos.map((p) => (
+                <li key={p}>{p}</li>
+              ))}
+            </ul>
+          </div>
+        )}
       </Section>
 
       <Section icon={HeartPulse} title="Segurança vocal">

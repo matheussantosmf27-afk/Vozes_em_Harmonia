@@ -8,7 +8,11 @@ import { join } from "node:path";
 import { ACHIEVEMENTS, ARRANGEMENTS, PATHS, REPERTOIRE, SKILLS, allStandaloneExercises } from "../src/content";
 import { applyLyrics, parseVoice, partRange } from "../src/lib/music/notation";
 
-const OUT = join(import.meta.dirname, "..", "supabase", "migrations", "20261018000500_content.sql");
+/**
+ * Migrations já aplicadas não são editadas: quando o conteúdo muda, a saída
+ * passa a ser uma migration nova (os upserts são idempotentes).
+ */
+const OUT = join(import.meta.dirname, "..", "supabase", "migrations", "20261021000100_content_aulas_interativas.sql");
 
 const q = (v: string | null | undefined) => (v === null || v === undefined ? "null" : `'${v.replace(/'/g, "''")}'`);
 const j = (v: unknown) => `${q(JSON.stringify(v))}::jsonb`;
