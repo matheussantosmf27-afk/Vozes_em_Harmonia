@@ -45,7 +45,7 @@ export function LessonPlayer({ lessonKey, steps, panels }: { lessonKey: string; 
     } catch {
       /* armazenamento indisponível */
     }
-    top.current?.scrollIntoView({ behavior: "smooth", block: "start" });
+    top.current?.scrollIntoView?.({ behavior: "smooth", block: "start" });
   }
 
   function finish() {
@@ -55,7 +55,7 @@ export function LessonPlayer({ lessonKey, steps, panels }: { lessonKey: string; 
     } catch {
       /* armazenamento indisponível */
     }
-    top.current?.scrollIntoView({ behavior: "smooth", block: "start" });
+    top.current?.scrollIntoView?.({ behavior: "smooth", block: "start" });
   }
 
   const step = steps[i];
@@ -105,7 +105,7 @@ export function LessonPlayer({ lessonKey, steps, panels }: { lessonKey: string; 
             >
               <ArrowLeft /> Rever desde o início
             </Button>
-            <Button onClick={() => document.getElementById("praticar")?.scrollIntoView({ behavior: "smooth" })}>
+            <Button onClick={() => document.getElementById("praticar")?.scrollIntoView?.({ behavior: "smooth" })}>
               Ir para a prática <ArrowDown />
             </Button>
           </div>
