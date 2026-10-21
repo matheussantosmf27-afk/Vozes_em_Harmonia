@@ -54,10 +54,10 @@ export const trilhaC: PathDef = {
                 prompt: "Duas pessoas tentam cantar a mesma nota. Em qual opção elas estão em uníssono?",
                 options: [
                   { label: "uníssono: as duas na mesma nota", notes: [["A3", "A3"]], mode: "chord", tempo: 40 },
-                  { label: "uma delas meio tom acima", notes: [["A3", "A#3"]], mode: "chord", tempo: 40 },
+                  { label: "uma delas um pouco acima (25 cents)", notes: [["A3", "A3"]], voiceCents: [0, 25], mode: "chord", tempo: 40 },
                 ],
                 answer: 0,
-                explain: "No uníssono as vozes se fundem num som liso. Quando uma escapa, aparece um “tremor” áspero: são as ondas batendo uma na outra.",
+                explain: "No uníssono as vozes se fundem num som liso. Quando uma escapa só um pouquinho, aparece um “balanço” (uá-uá-uá): são as ondas batendo uma na outra. Quanto mais lento o balanço, mais perto da afinação.",
               },
               { type: "illustration", name: "onda-desafinada", caption: "Ondas desencontradas: o som “treme”." },
               {
