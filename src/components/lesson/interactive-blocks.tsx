@@ -1,7 +1,7 @@
 "use client";
 
-import { useEffect, useMemo, useRef, useState } from "react";
-import { Check, CheckCircle2, Eye, Mic, Pause, Play, RotateCcw, Sparkles, Timer as TimerIcon, Volume2, X } from "lucide-react";
+import { useContext, useEffect, useMemo, useRef, useState } from "react";
+import { Check, CheckCircle2, Eye, Mic, MicOff, Pause, Play, RotateCcw, Sparkles, Timer as TimerIcon, Volume2, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { PlayButton } from "@/components/music/play-button";
 import { PitchMeter } from "@/components/music/pitch-meter";
@@ -9,6 +9,7 @@ import { MicConsent } from "@/components/music/mic-consent";
 import { Staff } from "@/components/music/staff";
 import { SingResult } from "@/components/exercises/answer-sing";
 import { Illustration } from "@/components/lesson/illustrations";
+import { StepActiveContext } from "@/components/lesson/lesson-player";
 import { playMidi } from "@/lib/audio/engine";
 import { usePitchDetector } from "@/lib/audio/use-pitch-detector";
 import { audioSpecToEvents, type NoteEvent } from "@/lib/exercises/generators";
@@ -398,6 +399,12 @@ export function SingAlong({ instruction, note, seconds = 3 }: { instruction: str
   const mic = usePitchDetector();
   const [capturing, setCapturing] = useState(false);
   const [result, setResult] = useState<SustainAnalysis | null>(null);
+  const active = useContext(StepActiveContext);
+  const { stop } = mic;
+  // a etapa fica oculta (não desmontada) ao avançar: libera o microfone
+  useEffect(() => {
+    if (!active) stop();
+  }, [active, stop]);
 
   function challenge() {
     setResult(null);
@@ -442,9 +449,14 @@ export function SingAlong({ instruction, note, seconds = 3 }: { instruction: str
       {mic.status === "listening" && (
         <div className="space-y-3">
           <PitchMeter pitch={mic.pitch} target={target} level={mic.level} />
-          <Button onClick={challenge} disabled={capturing}>
-            {capturing ? `Cantando… (${seconds}s)` : `Desafio: sustentar ${seconds} segundos`}
-          </Button>
+          <div className="flex flex-wrap gap-2">
+            <Button onClick={challenge} disabled={capturing}>
+              {capturing ? `Cantando… (${seconds}s)` : `Desafio: sustentar ${seconds} segundos`}
+            </Button>
+            <Button variant="ghost" onClick={stop} disabled={capturing}>
+              <MicOff /> Desligar microfone
+            </Button>
+          </div>
           {result && <SingResult analysis={result} />}
         </div>
       )}

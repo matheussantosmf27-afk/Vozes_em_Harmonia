@@ -1,18 +1,32 @@
 /**
- * Gera a migration de conteúdo inicial a partir de src/content.
- * Uso: npm run content:sql
- * É idempotente (upserts com IDs determinísticos) e pode ser reaplicada.
+ * Gera uma migration de conteúdo a partir de src/content.
+ * Uso: npm run content:sql -- <nome>   (ex.: npm run content:sql -- novas-aulas)
+ *
+ * Cada execução cria uma migration NOVA com data e hora no nome
+ * (supabase/migrations/AAAAMMDDhhmmss_content_<nome>.sql). Migrations já
+ * aplicadas nunca são reescritas: se o histórico do banco já tem uma versão,
+ * reescrever o arquivo dela não chegaria à produção. Os upserts são idempotentes,
+ * então aplicar a migration mais recente leva o banco ao conteúdo atual.
+ * Ao gerar de novo antes de aplicar, apague o arquivo anterior ainda não aplicado.
  */
-import { writeFileSync } from "node:fs";
+import { readdirSync, writeFileSync } from "node:fs";
 import { join } from "node:path";
 import { ACHIEVEMENTS, ARRANGEMENTS, PATHS, REPERTOIRE, SKILLS, allStandaloneExercises } from "../src/content";
 import { applyLyrics, parseVoice, partRange } from "../src/lib/music/notation";
 
-/**
- * Migrations já aplicadas não são editadas: quando o conteúdo muda, a saída
- * passa a ser uma migration nova (os upserts são idempotentes).
- */
-const OUT = join(import.meta.dirname, "..", "supabase", "migrations", "20261021000100_content_aulas_interativas.sql");
+const name = process.argv[2]?.trim().toLowerCase();
+if (!name || !/^[a-z0-9-]+$/.test(name)) {
+  console.error("Informe um nome curto para a migration (letras minúsculas, números e hífens).\nUso: npm run content:sql -- <nome>");
+  process.exit(1);
+}
+const DIR = join(import.meta.dirname, "..", "supabase", "migrations");
+const stamp = new Date().toISOString().replace(/\D/g, "").slice(0, 14);
+const latest = readdirSync(DIR).filter((f) => /^\d{14}_/.test(f)).sort().at(-1)?.slice(0, 14) ?? "";
+if (stamp <= latest) {
+  console.error(`Já existe uma migration com versão ${latest}, igual ou posterior a ${stamp}. Confira o relógio do sistema.`);
+  process.exit(1);
+}
+const OUT = join(DIR, `${stamp}_content_${name.replace(/-/g, "_")}.sql`);
 
 const q = (v: string | null | undefined) => (v === null || v === undefined ? "null" : `'${v.replace(/'/g, "''")}'`);
 const j = (v: unknown) => `${q(JSON.stringify(v))}::jsonb`;

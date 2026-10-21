@@ -1,10 +1,13 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { createContext, useEffect, useRef, useState } from "react";
 import { ArrowDown, ArrowLeft, ArrowRight, CheckCircle2, Ear, Eye, Hand, Lightbulb, ListOrdered, PartyPopper, Puzzle, Rocket } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import type { EtapaTipo } from "@/content/types";
 import { cn } from "@/lib/utils";
+
+/** Diz aos blocos se a etapa deles está visível (ex.: desligar o microfone ao sair dela). */
+export const StepActiveContext = createContext(true);
 
 const TIPO: Record<EtapaTipo, { label: string; icon: React.ComponentType<{ className?: string }>; cls: string }> = {
   descobrir: { label: "Descobrir", icon: Lightbulb, cls: "bg-primary/10 text-primary" },
@@ -122,7 +125,7 @@ export function LessonPlayer({ lessonKey, steps, panels }: { lessonKey: string; 
                 </span>
                 <h2 className="text-2xl font-semibold leading-tight">{s.titulo}</h2>
               </div>
-              {panels[k]}
+              <StepActiveContext.Provider value={visible && !finished}>{panels[k]}</StepActiveContext.Provider>
             </div>
           );
         })

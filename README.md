@@ -139,7 +139,7 @@ O teste de conteúdo verifica, entre outras coisas, que toda aula tem as nove se
 - Laboratório de percepção com 13 atividades em 5 níveis cada.
 - 13 arranjos de treino: melodias em domínio público (Beethoven, NEW BRITAIN, FRÈRE JACQUES) com harmonizações, exercícios e textos **originais da plataforma**, livres para uso no ministério.
 
-Para alterar o conteúdo inicial: edite `src/content/*`, rode `npm test` e `npm run content:sql` (regera `supabase/migrations/20261018000500_content.sql`, idempotente) e aplique a migration.
+Para alterar o conteúdo: edite `src/content/*`, rode `npm test` e depois `npm run content:sql -- <nome>` (ex.: `npm run content:sql -- revisao-trilha-b`). Isso cria uma migration **nova**, com data e hora no nome; migrations já aplicadas nunca são reescritas. Os upserts são idempotentes, então basta aplicar a migration mais recente. Se gerar de novo antes de aplicar, apague o arquivo anterior que ainda não foi aplicado.
 
 ## Segurança, privacidade e LGPD
 

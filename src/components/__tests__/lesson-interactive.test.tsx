@@ -11,7 +11,13 @@ vi.mock("@/lib/audio/engine", () => ({
   getAudioContext: vi.fn(),
 }));
 
-import { CheckQuestion, Compare, FlipCards, Match, Order, Reveal, TrueFalse } from "@/components/lesson/interactive-blocks";
+const micStop = vi.fn();
+vi.mock("@/lib/audio/use-pitch-detector", () => ({
+  usePitchDetector: () => ({ status: "listening", pitch: null, level: 0, start: vi.fn(), stop: micStop, beginCapture: vi.fn(), endCapture: () => [] }),
+  isMicSupported: () => true,
+}));
+
+import { CheckQuestion, Compare, FlipCards, Match, Order, Reveal, SingAlong, TrueFalse } from "@/components/lesson/interactive-blocks";
 import { LessonPlayer } from "@/components/lesson/lesson-player";
 import { Illustration } from "@/components/lesson/illustrations";
 import { ILLUSTRATIONS } from "@/content/types";
@@ -135,6 +141,25 @@ describe("LessonPlayer", () => {
     await user.click(screen.getByRole("button", { name: /Ver a aula inteira/ }));
     expect(screen.getByText("conteúdo 1")).toBeVisible();
     expect(screen.getByText("conteúdo 2")).toBeVisible();
+  });
+});
+
+describe("SingAlong dentro do player", () => {
+  it("desliga o microfone quando a etapa deixa de estar visível", async () => {
+    const user = userEvent.setup();
+    render(
+      <LessonPlayer
+        lessonKey="mic"
+        steps={[
+          { titulo: "Cante", tipo: "experimentar" },
+          { titulo: "Depois", tipo: "checar" },
+        ]}
+        panels={[<SingAlong key="s" instruction="Cante" note="A3" />, <p key="p">fim</p>]}
+      />,
+    );
+    micStop.mockClear();
+    await user.click(screen.getByRole("button", { name: /Continuar/ }));
+    expect(micStop).toHaveBeenCalled();
   });
 });
 
